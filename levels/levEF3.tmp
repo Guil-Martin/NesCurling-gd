@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bogr4m830xk05"]
+
+[ext_resource type="PackedScene" uid="uid://deadt1pslji3y" path="res://models/nesTable.glb" id="1_81i1n"]
+[ext_resource type="PackedScene" uid="uid://c26hey0p2l0t6" path="res://levels/level_office.glb" id="1_vnbw5"]
+[ext_resource type="Script" path="res://models/nes_table.gd" id="3_h8w8d"]
+
+[sub_resource type="Sky" id="Sky_mqgku"]
+
+[sub_resource type="Environment" id="Environment_syy14"]
+background_mode = 2
+background_color = Color(0.42476, 0.522992, 0.85754, 1)
+sky = SubResource("Sky_mqgku")
+ambient_light_source = 2
+ambient_light_color = Color(0.589096, 0.589096, 0.589096, 1)
+ambient_light_energy = 2.43
+reflected_light_source = 1
+
+[node name="LevelOffice" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_syy14")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.850047, 0.392837, -0.350854, -0.0112968, 0.652378, 0.75781, 0.526585, 0.648138, -0.550114, -18.4571, 25.3424, -19.5274)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.983956, 0, -8.60202e-08, -2.94206e-08, 0.924616, 0.336533, 8.08325e-08, 0.336533, -0.924616, 0.590424, 3.7345, -4.01184)
+
+[node name="level_office" parent="." instance=ExtResource("1_vnbw5")]
+
+[node name="nesTable2" parent="." instance=ExtResource("1_81i1n")]
+transform = Transform3D(0.987484, 0, 0, 0, 0.987484, 0, 0, 0, 0.987484, 0.585056, 0.172283, -0.104825)
+script = ExtResource("3_h8w8d")
