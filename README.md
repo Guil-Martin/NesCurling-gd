@@ -1,1 +1,0 @@
-## NesCurling Godot & GDScript version
