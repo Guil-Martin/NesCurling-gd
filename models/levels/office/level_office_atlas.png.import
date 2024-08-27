@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8vbpmjb7xmto"
+uid="uid://i5xqu46aeey5"
 path.s3tc="res://.godot/imported/level_office_atlas.png-4f3c01b24c66fab53b4d66bbd5887baf.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "66531f138e53127b24c01c38c9ed225e"
+"md5": "c4b60d26a628746e1dbfed6e9847c47e"
 }
 
 [deps]

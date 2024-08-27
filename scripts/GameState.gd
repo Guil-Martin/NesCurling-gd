@@ -1,9 +1,17 @@
 extends Node
 
-var debug = false
+var debug: bool = false
+var platformWeb = OS.has_feature("web") or OS.has_feature("web_android") or OS.has_feature("web_ios")
 
-var players : Array = [null, null, null, null]
-var playingPlayer
+# Players
+var players: Array = [null, null, null, null]
+var playingPlayer #: Player
+
+# level
+var levecurrentLevel
+var currentTable
+
+# Local data
 var gameHistory # json file, something to store history locally, then database storing ?
 
 # Refs
@@ -11,7 +19,7 @@ var placementPlaneRef
 func setScorePlacementPlaneRef(ref):
 	placementPlaneRef = ref
 	
-var scoreZoneRef : Node3D
+var scoreZoneRef: Node3D
 func setScoreZoneRef(ref):
 	scoreZoneRef = ref
 	
@@ -21,26 +29,26 @@ func setWithinScoreZone(capsule : NesCapsule):
 	withinScoreZone.append(capsule)
 	
 # Game status
-var score = [0, 0, 0, 0]
+var score: Array = [0, 0, 0, 0]
 #0 : Nothing
 #1 : Game start
 #2 : During capsule shot
 #3 : Capsule placement
-var gameState = 0;
+var gameState: int = 0;
 var gameEvent # isDragging and stuff
-var turn = 0
-var round = 0
+var turn: int = 0
+var round: int = 0
 
-var capsules
-var draggedCapsule
+var capsules #: NesCapsule []
+var draggedCapsule #: NesCapsule
 
 # UI stuff
-var endRoundMsg
+var endRoundMsg: String
 func setEndRoundMsg(message):
 	endRoundMsg = message
 	
-var scoreToWin
-var nbCapsules
+var scoreToWin: float = 10
+var nbCapsules: float = 3
 
 #determineNextPlayer()
 #startGame()
@@ -56,8 +64,7 @@ var rng = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	print("gamestate ready ", rng.randf())
-	
-
+	print("gamestate platformWeb ", platformWeb)
 	
 func setGameState(state):
 	gameState = state
