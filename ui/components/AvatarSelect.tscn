@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=3 uid="uid://spqhy0i51v7o"]
+
+[ext_resource type="Script" path="res://ui/components/AvatarSelect.gd" id="1_jm0pc"]
+[ext_resource type="PackedScene" uid="uid://dq5ylnk5ct1d2" path="res://ui/components/PlayerBox_AvatarBtn.tscn" id="2_gwi7a"]
+[ext_resource type="Texture2D" uid="uid://bl87rgcdoylxx" path="res://ui/images/ui/ui_close.png" id="3_tllux"]
+
+[node name="AvatarSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_jm0pc")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 384.0
+offset_top = -256.0
+offset_right = 480.0
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="close_button" type="TextureButton" parent="ColorRect"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("3_tllux")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(768, 512)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -384.0
+offset_top = -256.0
+offset_right = 384.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="avatar_grid" type="GridContainer" parent="ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 3
+
+[node name="AvatarButton" parent="ScrollContainer/avatar_grid" instance=ExtResource("2_gwi7a")]
+layout_mode = 2
+
+[node name="AvatarButton2" parent="ScrollContainer/avatar_grid" instance=ExtResource("2_gwi7a")]
+layout_mode = 2
+
+[node name="AvatarButton3" parent="ScrollContainer/avatar_grid" instance=ExtResource("2_gwi7a")]
+layout_mode = 2
+
+[node name="AvatarButton4" parent="ScrollContainer/avatar_grid" instance=ExtResource("2_gwi7a")]
+layout_mode = 2
+
+[node name="AvatarButton5" parent="ScrollContainer/avatar_grid" instance=ExtResource("2_gwi7a")]
+layout_mode = 2
+
+[node name="AvatarButton6" parent="ScrollContainer/avatar_grid" instance=ExtResource("2_gwi7a")]
+layout_mode = 2
+
+[connection signal="pressed" from="ColorRect/close_button" to="." method="_on_close_button_pressed"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxku135jo0mnx"
-path="res://.godot/imported/cap_red.png-968b5fcc7a45b0b69802ed9426daea92.ctex"
+uid="uid://y8lgggt2s2ut"
+path="res://.godot/imported/blondin.png-f49d09a1fef9e8c72d7f5dea3caf8092.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/images/cap_red.png"
-dest_files=["res://.godot/imported/cap_red.png-968b5fcc7a45b0b69802ed9426daea92.ctex"]
+source_file="res://ui/images/avatars/blondin.png"
+dest_files=["res://.godot/imported/blondin.png-f49d09a1fef9e8c72d7f5dea3caf8092.ctex"]
 
 [params]
 

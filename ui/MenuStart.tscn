@@ -1,0 +1,150 @@
+[gd_scene load_steps=7 format=3 uid="uid://crc8cnukweya5"]
+
+[ext_resource type="Theme" uid="uid://8vbrmwwup85v" path="res://ui/nes_theme.tres" id="1_4o62l"]
+[ext_resource type="Script" path="res://ui/MenuStart.gd" id="1_p8o61"]
+[ext_resource type="Shader" path="res://ui/bg_scroll.gdshader" id="2_ol466"]
+[ext_resource type="Texture2D" uid="uid://dnlec0e3y23l2" path="res://ui/images/background.png" id="3_34611"]
+[ext_resource type="PackedScene" uid="uid://c8tvt7wc8hudg" path="res://ui/components/PlayerBox.tscn" id="4_x6g6x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ta6n4"]
+shader = ExtResource("2_ol466")
+shader_parameter/speed = 0.15
+
+[node name="MenuStart" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+mouse_filter = 1
+theme = ExtResource("1_4o62l")
+script = ExtResource("1_p8o61")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.40495, 0.445642, 0.547716, 1)
+
+[node name="Pattern" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_ta6n4")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_34611")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -156.5
+offset_right = 125.0
+offset_bottom = 156.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="vbox_players" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PlayerBox" parent="VBoxContainer/vbox_players" instance=ExtResource("4_x6g6x")]
+layout_mode = 2
+
+[node name="PlayerBox2" parent="VBoxContainer/vbox_players" instance=ExtResource("4_x6g6x")]
+layout_mode = 2
+
+[node name="PlayerBox3" parent="VBoxContainer/vbox_players" instance=ExtResource("4_x6g6x")]
+layout_mode = 2
+
+[node name="PlayerBox4" parent="VBoxContainer/vbox_players" instance=ExtResource("4_x6g6x")]
+layout_mode = 2
+
+[node name="label_nbcapsules" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Nombre de capsules :"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="slider_nbcapsules" type="HSlider" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 10.0
+value = 5.0
+rounded = true
+tick_count = 10
+ticks_on_borders = true
+
+[node name="label_nbcapsules_txt" type="Label" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = "0
+"
+
+[node name="label_score" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Score à atteindre :"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="slider_score" type="HSlider" parent="VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 20.0
+value = 10.0
+tick_count = 20
+ticks_on_borders = true
+
+[node name="label_score_txt" type="Label" parent="VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = "0
+"
+
+[node name="button_start" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme = ExtResource("1_4o62l")
+text = "Démarrer
+"
+
+[node name="button_quit" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Quitter"
+
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/slider_nbcapsules" to="." method="_on_slider_nbcapsules_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer2/slider_score" to="." method="_on_slider_score_value_changed"]
+[connection signal="pressed" from="VBoxContainer/button_start" to="." method="_on_button_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/button_quit" to="." method="_on_button_quit_pressed"]

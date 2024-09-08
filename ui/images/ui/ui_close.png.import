@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxku135jo0mnx"
-path="res://.godot/imported/cap_red.png-968b5fcc7a45b0b69802ed9426daea92.ctex"
+uid="uid://bl87rgcdoylxx"
+path="res://.godot/imported/ui_close.png-d002f4017de4a3c17d0337798b6369ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/images/cap_red.png"
-dest_files=["res://.godot/imported/cap_red.png-968b5fcc7a45b0b69802ed9426daea92.ctex"]
+source_file="res://ui/images/ui/ui_close.png"
+dest_files=["res://.godot/imported/ui_close.png-d002f4017de4a3c17d0337798b6369ee.ctex"]
 
 [params]
 

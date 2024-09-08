@@ -12,7 +12,7 @@ config_version=5
 
 config/name="NesCurling"
 config/version="0.1"
-run/main_scene="res://ui/menu_start.tscn"
+run/main_scene="res://ui/MenuStart.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 run/max_fps=60
 boot_splash/image="res://ui/images/nc_icon.png"
@@ -30,6 +30,15 @@ window/size/viewport_height=1080
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/blender_godot_pipeline/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://images/": "yellow",
+"res://scenes/": "orange",
+"res://scripts/": "gray",
+"res://ui/": "teal"
+}
 
 [input]
 

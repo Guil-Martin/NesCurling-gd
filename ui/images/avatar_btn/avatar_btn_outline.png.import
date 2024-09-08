@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxku135jo0mnx"
-path="res://.godot/imported/cap_red.png-968b5fcc7a45b0b69802ed9426daea92.ctex"
+uid="uid://162yag57stmj"
+path="res://.godot/imported/avatar_btn_outline.png-b5a5bbba6210cede6a52c0e3e7bff7b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/images/cap_red.png"
-dest_files=["res://.godot/imported/cap_red.png-968b5fcc7a45b0b69802ed9426daea92.ctex"]
+source_file="res://ui/images/avatar_btn/avatar_btn_outline.png"
+dest_files=["res://.godot/imported/avatar_btn_outline.png-b5a5bbba6210cede6a52c0e3e7bff7b9.ctex"]
 
 [params]
 

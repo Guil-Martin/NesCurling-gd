@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://boypkfrwjbb6h"]
+
+[ext_resource type="Script" path="res://ui/components/UIGamePBox.gd" id="1_7fnq1"]
+[ext_resource type="Texture2D" uid="uid://pausm3irrlfp" path="res://ui/images/cap_white.png" id="1_8adjk"]
+[ext_resource type="Texture2D" uid="uid://rtyxatdtbgvh" path="res://ui/images/cap_blue.png" id="2_um6y2"]
+
+[node name="UIGamePBox" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7fnq1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="player_avatar" type="TextureRect" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 40)
+layout_mode = 2
+texture = ExtResource("1_8adjk")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="player_name" type="Label" parent="HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "12345678911234567892"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="player_color" type="TextureRect" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(23, 10)
+layout_mode = 2
+texture = ExtResource("2_um6y2")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="player_score" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Score: 00"
