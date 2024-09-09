@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dq5ylnk5ct1d2"]
 
 [ext_resource type="Script" path="res://ui/components/AvatarButton.gd" id="1_6mla7"]
-[ext_resource type="Texture2D" uid="uid://dh6jp8p5ncf7y" path="res://ui/images/avatar_btn/avatar_btn.png" id="1_e5hfj"]
-[ext_resource type="Texture2D" uid="uid://coi7pjg6qr8at" path="res://ui/images/avatar_btn/avatar_btn_outline.png" id="1_yw6x4"]
-[ext_resource type="Texture2D" uid="uid://b8l4f2nbkh4vg" path="res://ui/images/avatar_btn/avatar_btn_hover.png" id="2_texjj"]
+[ext_resource type="Texture2D" uid="uid://c21u8pp3huwlh" path="res://ui/images/avatar_btn/avatar_btn.png" id="1_e5hfj"]
+[ext_resource type="Texture2D" uid="uid://162yag57stmj" path="res://ui/images/avatar_btn/avatar_btn_outline.png" id="1_yw6x4"]
+[ext_resource type="Texture2D" uid="uid://oaqd5n4ickiv" path="res://ui/images/avatar_btn/avatar_btn_hover.png" id="2_texjj"]
 
 [node name="AvatarButton" type="Control"]
 custom_minimum_size = Vector2(256, 256)

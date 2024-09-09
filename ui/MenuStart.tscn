@@ -46,17 +46,18 @@ stretch_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = -156.5
-offset_right = 125.0
-offset_bottom = 156.5
+anchors_preset = -1
+anchor_left = 0.382
+anchor_top = 0.28
+anchor_right = 0.628
+anchor_bottom = 0.714
+offset_left = -0.440063
+offset_top = -0.399994
+offset_right = -157.96
+offset_bottom = -156.12
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.5, 1.5)
 
 [node name="vbox_players" type="VBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true

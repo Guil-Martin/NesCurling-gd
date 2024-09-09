@@ -5,11 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://rtyxatdtbgvh" path="res://ui/images/cap_blue.png" id="2_um6y2"]
 
 [node name="UIGamePBox" type="VBoxContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 237.0
+offset_bottom = 50.0
+scale = Vector2(1.5, 1.5)
 script = ExtResource("1_7fnq1")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
