@@ -1,6 +1,8 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://8vbrmwwup85v"]
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://8vbrmwwup85v"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgc4e"]
+content_margin_left = 6.0
+content_margin_right = 6.0
 bg_color = Color(0.533516, 0.664323, 0.807743, 1)
 border_width_left = 2
 border_width_top = 2
@@ -12,6 +14,8 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3bgd"]
+content_margin_left = 6.0
+content_margin_right = 6.0
 bg_color = Color(0.485018, 0.623688, 0.775167, 1)
 border_width_left = 2
 border_width_top = 2
@@ -23,6 +27,19 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_du48f"]
+content_margin_left = 6.0
+content_margin_right = 6.0
+bg_color = Color(0.368627, 0.509804, 0.662745, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvpdf"]
 bg_color = Color(0.368627, 0.509804, 0.662745, 1)
 border_width_left = 2
 border_width_top = 2
@@ -82,6 +99,7 @@ corner_radius_bottom_left = 10
 Button/styles/focus = SubResource("StyleBoxFlat_wgc4e")
 Button/styles/hover = SubResource("StyleBoxFlat_e3bgd")
 Button/styles/normal = SubResource("StyleBoxFlat_du48f")
+Button/styles/pressed = SubResource("StyleBoxFlat_uvpdf")
 HSlider/styles/grabber_area = SubResource("StyleBoxFlat_ufgh6")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_rctpi")
 HSlider/styles/slider = SubResource("StyleBoxFlat_klkfv")

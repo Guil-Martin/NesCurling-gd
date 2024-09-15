@@ -1,33 +1,33 @@
 class_name FreeLookCamera extends Camera3D
 
 # Modifier keys' speed multiplier
-const SHIFT_MULTIPLIER = 2.5
-const ALT_MULTIPLIER = 1.0 / SHIFT_MULTIPLIER
+const SHIFT_MULTIPLIER: float = 2.5
+const ALT_MULTIPLIER: float = 1.0 / SHIFT_MULTIPLIER
 
-@export_range(0.0, 1.0) var sensitivity = 0.25
+@export_range(0.0, 1.0) var sensitivity: float = 0.25
 
 # Mouse state
 var _mouse_position = Vector2(0.0, 0.0)
 var _total_pitch = 0.0
 
 # Movement state
-var _direction = Vector3(0.0, 0.0, 0.0)
-var _velocity = Vector3(0.0, 0.0, 0.0)
-var _acceleration = 30
-var _deceleration = -10
-var _vel_multiplier = 4
+var _direction: Vector3 = Vector3(0.0, 0.0, 0.0)
+var _velocity: Vector3 = Vector3(0.0, 0.0, 0.0)
+var _acceleration: float = 30
+var _deceleration: float = -10
+var _vel_multiplier: float = 4
 
 # Keyboard state
-var _w = false
-var _s = false
-var _a = false
-var _d = false
-var _q = false
-var _e = false
-var _shift = false
-var _alt = false
+var _w: bool = false
+var _s: bool = false
+var _a: bool = false
+var _d: bool = false
+var _q: bool = false
+var _e: bool = false
+var _shift: bool = false
+var _alt: bool = false
 
-func _input(event):
+func _input(event) -> void:
 	# Receives mouse motion
 	if event is InputEventMouseMotion:
 		_mouse_position = event.relative
@@ -59,12 +59,12 @@ func _input(event):
 				_e = event.pressed
 
 # Updates mouselook and movement every frame
-func _process(delta):
+func _process(delta) -> void:
 	_update_mouselook()
 	_update_movement(delta)
 
 # Updates camera movement
-func _update_movement(delta):
+func _update_movement(delta) -> void:
 	# Computes desired direction from key states
 	_direction = Vector3((_d as float) - (_a as float), 
 						(_e as float) - (_q as float), 
@@ -72,11 +72,11 @@ func _update_movement(delta):
 	
 	# Computes the change in velocity due to desired direction and "drag"
 	# The "drag" is a constant acceleration on the camera to bring it's velocity to 0
-	var offset = _direction.normalized() * _acceleration * _vel_multiplier * delta \
+	var offset: Vector3 = _direction.normalized() * _acceleration * _vel_multiplier * delta \
 		+ _velocity.normalized() * _deceleration * _vel_multiplier * delta
 	
 	# Compute modifiers' speed multiplier
-	var speed_multi = 1
+	var speed_multi: float = 1
 	if _shift: speed_multi *= SHIFT_MULTIPLIER
 	if _alt: speed_multi *= ALT_MULTIPLIER
 	
@@ -93,12 +93,12 @@ func _update_movement(delta):
 		translate(_velocity * delta * speed_multi)
 
 # Updates mouse look 
-func _update_mouselook():
+func _update_mouselook() -> void:
 	# Only rotates mouse if the mouse is captured
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		_mouse_position *= sensitivity
-		var yaw = _mouse_position.x
-		var pitch = _mouse_position.y
+		var yaw: float = _mouse_position.x
+		var pitch: float = _mouse_position.y
 		_mouse_position = Vector2(0, 0)
 		
 		# Prevents looking up/down too far

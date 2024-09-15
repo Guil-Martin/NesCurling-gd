@@ -1,21 +1,20 @@
 class_name PlayerBox extends HBoxContainer
 
 static var select_avatar_menu_instanciated = -1
-static var player_button_nb = 0
-var player_button_slot
+static var player_button_nb: int = 0
+var player_button_slot: int
 var select_avatar_menu: PackedScene = preload(GameState.UI_SCENE_PATH + "AvatarSelect" + ".tscn")
 
 @onready var avatar_btn: TextureButton = %avatarBtn
 @onready var input_name: LineEdit = $input_name
 
 var select_avatar_menu_instance: AvatarSelect
-var menu_start: MenuStart
 
 func _ready() -> void:
 	# Add 1 to number of total buttons instancied and set the slot of this button instance
 	player_button_slot = player_button_nb
 	player_button_nb += 1
-	menu_start = get_tree().current_scene
+	GameState.menu_start = get_tree().current_scene
 	
 	input_name.placeholder_text = "Player " + str(player_button_nb)
 	
@@ -28,11 +27,11 @@ func _process(delta: float) -> void:
 
 func _on_button_pressed() -> void:
 	# Opens the avatar selector
-	if menu_start:
+	if GameState.menu_start:
 		if is_select_avatar_opened():
 			close_select_avatar()
 		else:
-			menu_start.select_avatar_slot = player_button_slot
+			GameState.menu_start.select_avatar_slot = player_button_slot
 			open_select_avatar()
 
 
@@ -42,7 +41,7 @@ func is_select_avatar_opened() -> bool:
 		
 func open_select_avatar() -> void:
 	if select_avatar_menu:
-		select_avatar_menu_instanciated = menu_start.select_avatar_slot
+		select_avatar_menu_instanciated = GameState.menu_start.select_avatar_slot
 		select_avatar_menu_instance = select_avatar_menu.instantiate()
 		owner.add_child(select_avatar_menu_instance)
 

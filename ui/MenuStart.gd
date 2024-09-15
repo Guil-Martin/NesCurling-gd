@@ -11,6 +11,8 @@ class_name MenuStart extends Control
 var select_avatar_slot = -1
 
 func _ready() -> void:
+	GameState.menu_start = self
+	
 	## Hides quit button for web export
 	button_quit.grab_focus()
 	button_quit.visible = !GameState.platformWeb
@@ -39,7 +41,7 @@ func _on_button_quit_pressed() -> void:
 	
 	
 # // Avatar change / # TODO -> to improve
-func change_avatar(chosen_texture: CompressedTexture2D):
+func change_avatar(chosen_texture: CompressedTexture2D) -> void:
 	if chosen_texture:
 		var players = get_node("%vbox_players").get_children()
 		var pBox: PlayerBox = players[select_avatar_slot]

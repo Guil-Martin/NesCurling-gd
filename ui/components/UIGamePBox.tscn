@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://boypkfrwjbb6h"]
+[gd_scene load_steps=3 format=3 uid="uid://boypkfrwjbb6h"]
 
 [ext_resource type="Script" path="res://ui/components/UIGamePBox.gd" id="1_7fnq1"]
 [ext_resource type="Texture2D" uid="uid://pausm3irrlfp" path="res://ui/images/cap_white.png" id="1_8adjk"]
-[ext_resource type="Texture2D" uid="uid://rtyxatdtbgvh" path="res://ui/images/cap_blue.png" id="2_um6y2"]
 
 [node name="UIGamePBox" type="VBoxContainer"]
 offset_right = 237.0
@@ -39,7 +38,6 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 custom_minimum_size = Vector2(23, 10)
 layout_mode = 2
-texture = ExtResource("2_um6y2")
 expand_mode = 1
 stretch_mode = 4
 

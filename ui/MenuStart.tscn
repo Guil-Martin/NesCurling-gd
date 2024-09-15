@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://8vbrmwwup85v" path="res://ui/nes_theme.tres" id="1_4o62l"]
 [ext_resource type="Script" path="res://ui/MenuStart.gd" id="1_p8o61"]
-[ext_resource type="Shader" path="res://ui/bg_scroll.gdshader" id="2_ol466"]
+[ext_resource type="Shader" path="res://ui/shaders/bg_scroll.gdshader" id="2_ol466"]
 [ext_resource type="Texture2D" uid="uid://dnlec0e3y23l2" path="res://ui/images/background.png" id="3_34611"]
 [ext_resource type="PackedScene" uid="uid://c8tvt7wc8hudg" path="res://ui/components/PlayerBox.tscn" id="4_x6g6x"]
 

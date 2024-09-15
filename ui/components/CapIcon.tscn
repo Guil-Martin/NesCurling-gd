@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://de8rt0f7qfqi2"]
+
+[ext_resource type="Shader" path="res://ui/shaders/cap_color.gdshader" id="1_0u20r"]
+[ext_resource type="Texture2D" uid="uid://pausm3irrlfp" path="res://ui/images/cap_white.png" id="2_l86x5"]
+[ext_resource type="Script" path="res://ui/components/CapIcon.gd" id="3_b2yb7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dxth5"]
+shader = ExtResource("1_0u20r")
+shader_parameter/target_color = Vector4(0, 0.7, 1.6, 1)
+shader_parameter/tolerance = 0.1
+
+[node name="CapIcon" type="TextureRect"]
+material = SubResource("ShaderMaterial_dxth5")
+texture = ExtResource("2_l86x5")
+expand_mode = 2
+script = ExtResource("3_b2yb7")

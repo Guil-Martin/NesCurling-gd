@@ -1,8 +1,9 @@
-[gd_scene load_steps=161 format=4 uid="uid://bogr4m830xk05"]
+[gd_scene load_steps=163 format=4 uid="uid://bogr4m830xk05"]
 
-[ext_resource type="Texture2D" uid="uid://b6bycvhvqsqkq" path="res://scenes/levels/office/textures/level_office_atlas.png" id="1_35a6e"]
-[ext_resource type="Texture2D" uid="uid://clyxubj5e0b8c" path="res://scenes/levels/office/textures/level_office_floor_albedo.png" id="2_nqnah"]
-[ext_resource type="Texture2D" uid="uid://cimetyvcy1th3" path="res://scenes/levels/office/textures/level_office_walls_albedo.png" id="3_43i6j"]
+[ext_resource type="Script" path="res://scenes/levels/BaseLevel.gd" id="1_wqv87"]
+[ext_resource type="Texture2D" uid="uid://b6bycvhvqsqkq" path="res://scenes/levels/office/textures/level_office_atlas.png" id="2_ax7d6"]
+[ext_resource type="Texture2D" uid="uid://cimetyvcy1th3" path="res://scenes/levels/office/textures/level_office_walls_albedo.png" id="3_lxfxg"]
+[ext_resource type="Texture2D" uid="uid://clyxubj5e0b8c" path="res://scenes/levels/office/textures/level_office_floor_albedo.png" id="4_gl6a6"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_f15ur"]
 
@@ -10,14 +11,12 @@
 sky_material = SubResource("PhysicalSkyMaterial_f15ur")
 
 [sub_resource type="Environment" id="Environment_syy14"]
-background_mode = 2
-background_color = Color(0.42476, 0.522992, 0.85754, 1)
+background_mode = 1
 sky = SubResource("Sky_mqgku")
 ambient_light_source = 2
 ambient_light_color = Color(0.589096, 0.589096, 0.589096, 1)
-ambient_light_energy = 2.3
+ambient_light_energy = 2.24
 reflected_light_source = 1
-tonemap_exposure = 0.9
 tonemap_white = 1.5
 ssao_radius = 5.01
 ssao_intensity = 4.76
@@ -28,7 +27,7 @@ adjustment_brightness = 0.9
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2wrdg"]
 resource_name = "M_Atlas"
 cull_mode = 2
-albedo_texture = ExtResource("1_35a6e")
+albedo_texture = ExtResource("2_ax7d6")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_cyyav"]
 _surfaces = [{
@@ -65,7 +64,7 @@ shadow_mesh = SubResource("ArrayMesh_cyyav")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r6ndw"]
 resource_name = "M_walls"
 cull_mode = 2
-albedo_texture = ExtResource("3_43i6j")
+albedo_texture = ExtResource("3_lxfxg")
 roughness = 0.913636
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_iy76g"]
@@ -231,7 +230,7 @@ shadow_mesh = SubResource("ArrayMesh_gkt08")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x4ms3"]
 resource_name = "M_floor"
 cull_mode = 2
-albedo_texture = ExtResource("2_nqnah")
+albedo_texture = ExtResource("4_gl6a6")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2vrrf"]
 _surfaces = [{
@@ -2508,8 +2507,14 @@ shadow_mesh = SubResource("ArrayMesh_mb46f")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fcvbj"]
 data = PackedVector3Array(25.7971, 0, 30.9257, -25.2029, 2.86013e-09, -17.0743, 25.7971, 2.86013e-09, -17.0743, 25.7971, 0, 30.9257, -25.2029, 0, 30.9257, -25.2029, 2.86013e-09, -17.0743)
 
-[node name="level_office" type="Node3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_226ai"]
+size = Vector3(53.9962, 0.80127, 50.2917)
+
+[node name="level_office" type="Node3D" node_paths=PackedStringArray("camera_spot", "table_spot")]
 transform = Transform3D(0.780895, 0, 0, 0, 0.780895, 0, 0, 0, 0.780895, 0, 0, 0)
+script = ExtResource("1_wqv87")
+camera_spot = NodePath("camera_spot")
+table_spot = NodePath("table_spot")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_syy14")
@@ -2931,4 +2936,9 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000422478, 0.000985622, -7.35822)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="level_office/@StaticBody3D@23016"]
+visible = false
 shape = SubResource("ConcavePolygonShape3D_fcvbj")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="level_office/@StaticBody3D@23016"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.284271, -0.4021, 7.39704)
+shape = SubResource("BoxShape3D_226ai")

@@ -1,16 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://cltsq6n5vuls7"]
 
-[ext_resource type="PackedScene" uid="uid://m7n48njjgg5q" path="res://ui/UIGame.tscn" id="1_206ox"]
-[ext_resource type="Script" path="res://scenes/levels/BaseLevel.gd" id="1_deg52"]
-[ext_resource type="Script" path="res://scripts/Camera.gd" id="2_ry37b"]
+[ext_resource type="Script" path="res://scenes/levels/MainLevel.gd" id="1_iso3m"]
+[ext_resource type="PackedScene" uid="uid://m7n48njjgg5q" path="res://ui/UIGame.tscn" id="2_ml1h3"]
+[ext_resource type="Script" path="res://scripts/Camera.gd" id="3_rnklc"]
 
 [node name="BaseLevel" type="Node3D"]
 transform = Transform3D(0.780895, 0, 0, 0, 0.780895, 0, 0, 0, 0.780895, 0, 0, 0)
-script = ExtResource("1_deg52")
+script = ExtResource("1_iso3m")
 
-[node name="UIGame" parent="." instance=ExtResource("1_206ox")]
+[node name="UIGame" parent="." instance=ExtResource("2_ml1h3")]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-1, 1.98245e-08, -1.4189e-07, -2.99005e-08, 0.939692, 0.342023, 1.40113e-07, 0.342023, -0.939692, 1.48478, 2.043, -5.52111)
 fov = 60.0
-script = ExtResource("2_ry37b")
+script = ExtResource("3_rnklc")
