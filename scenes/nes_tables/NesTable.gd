@@ -9,6 +9,7 @@ func _on_score_zone_body_entered(body: Node3D) -> void:
 	if body is NesCapsule:
 		GameState.add_to_score_zone(body)
 
+
 # Score zone remove capsule
 func _on_score_zone_body_exited(body: Node3D) -> void:
 	if body is NesCapsule:

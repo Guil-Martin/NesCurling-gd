@@ -107,8 +107,6 @@ func start_game() -> void:
 			newPlayer.slot = players.size()
 			newPlayer.avatar = player_box.avatar_btn.texture_normal
 			players.append(newPlayer)
-			
-	print_rich("players ", players)
 	
 	state = States.SPECTATING;
 	turn = 1
@@ -122,6 +120,7 @@ func start_game() -> void:
 		get_tree().call_deferred("change_scene_to_file", LEVELS.get("main"))
 
 
+# TODO enable/disable collisions does not work properly
 # Enter a state of placing the capsule on the placement zone, enable the given collision to make the capsule stay in the zone
 func placement(capsule: NesCapsule) -> void:
 	if state != States.PLACING:

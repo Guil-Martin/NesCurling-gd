@@ -35,6 +35,8 @@ func _ready() -> void:
 func possess() -> void:
 	if !possessed:
 		possessed = true
+		
+		# TODO rotation does not work
 		print("self ", self)
 		print("last_capsule ", GameState.last_capsule)
 		global_rotation = Vector3.ZERO
@@ -48,20 +50,13 @@ func possess() -> void:
 		lock_rotation = false
 		
 	GameState.placement(self)
-	
-
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		# Push every spawned capsule on the map
-		apply_central_impulse(Vector3(0, 0, 0.4))
 
 
 # On click, push opposite to the camera, testing purpose
 func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		var scene_camera: FreeLookCamera = get_parent().get_node("Camera3D")
 		var impulse_strength = 1.8
-		var camera_position: Vector3 = scene_camera.global_transform.origin
+		var camera_position: Vector3 = GameState.main_level.main_camera.global_transform.origin
 		var rigid_body_position: Vector3 = global_transform.origin
 		var direction_to_camera: Vector3 = camera_position - rigid_body_position
 		direction_to_camera.y = 0.01
