@@ -123,6 +123,7 @@ cam_backward={
 [physics]
 
 3d/physics_engine="Rapier3D"
+rapier/solver/length_unit_3d=10.0
 
 [rendering]
 

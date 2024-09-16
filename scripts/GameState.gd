@@ -125,14 +125,14 @@ func start_game() -> void:
 func placement(capsule: NesCapsule) -> void:
 	if state != States.PLACING:
 		for collision: StaticBody3D in main_level.current_table.placement_cols:
-			collision.set_process(true)
+			collision.process_mode = Node.PROCESS_MODE_INHERIT
 
 		state = States.PLACING
 	else:
 		main_level.setup_camera() # Reset camera position
 		main_level.main_camera.make_current() # Switch to the main camera
 		for collision: StaticBody3D in main_level.current_table.placement_cols:
-			collision.set_process(false)
+			collision.process_mode = Node.PROCESS_MODE_DISABLED
 
 		state = States.SPECTATING
 

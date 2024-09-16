@@ -40,6 +40,7 @@ func _on_spawn_capsule_pressed() -> void:
 		var nes_capsule_i: NesCapsule = NES_CAPSULE.instantiate()
 		owner.add_child(nes_capsule_i)
 		nes_capsule_i.global_transform.origin = GameState.main_level.current_table.spawn_point.global_transform.origin
+		#nes_capsule_i.translate(GameState.main_level.current_table.spawn_point.global_transform.origin)
 	
 
 func _on_delete_all_pressed() -> void:
