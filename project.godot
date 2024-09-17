@@ -30,7 +30,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/blender_godot_pipeline/plugin.cfg")
+enabled=PackedStringArray()
 
 [file_customization]
 
@@ -122,8 +122,10 @@ cam_backward={
 
 [physics]
 
-3d/physics_engine="Rapier3D"
+3d/physics_engine="JoltPhysics3D"
 rapier/solver/length_unit_3d=10.0
+jolt_3d/solver/contact_speculative_distance=0.05
+jolt_3d/solver/contact_allowed_penetration=0.0
 
 [rendering]
 

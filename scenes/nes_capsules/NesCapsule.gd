@@ -34,12 +34,12 @@ func _ready() -> void:
 func possess() -> void:
 	if !possessed:
 		possessed = true
-		#lock_rotation = true # Bugged, cannot be re-eabled with Rapier3D
+		lock_rotation = true # Bugged, cannot be re-eabled with Rapier3D
 		global_rotation = Vector3.ZERO
 		global_position = (Vector3(global_position.x, global_position.y +0.1, global_position.z))
 		camera_3d.make_current()
 	else:
-		#lock_rotation = false
+		lock_rotation = false
 		possessed = false
 		
 	GameState.placement(self)
@@ -58,6 +58,11 @@ func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, n
 
 
 func _physics_process(delta: float) -> void:
+	
+	# TODO Register click they display power bar
+	# First click, power bar that fills then deplete
+	# Second click throw capsule
+	
 	get_move_input(delta)
 
 	
@@ -73,7 +78,7 @@ func get_move_input(delta: float) -> void:
 			nes_capsule.rotation_degrees.y = cam_direction
 			
 			# Apply force in the direction of movement
-			global_rotation = Vector3.ZERO # Reset rotation each movement
+			#global_rotation = Vector3.ZERO # Reset rotation each movement
 			apply_central_force(direction * move_speed)
 
 		# Handle camera
