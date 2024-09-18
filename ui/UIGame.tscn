@@ -186,6 +186,19 @@ layout_mode = 2
 size_flags_vertical = 1
 show_percentage = false
 
+[node name="debug_state" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -97.0
+offset_top = 118.0
+offset_right = 97.0
+offset_bottom = 141.0
+grow_horizontal = 2
+text = "STATE"
+horizontal_alignment = 1
+
 [connection signal="pressed" from="action_btns/SpawnCapsule" to="." method="_on_spawn_capsule_pressed"]
 [connection signal="pressed" from="action_btns/DeleteAll" to="." method="_on_delete_all_pressed"]
 [connection signal="pressed" from="action_btns/Possess" to="." method="_on_possess_pressed"]

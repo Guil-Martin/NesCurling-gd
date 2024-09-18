@@ -79,6 +79,9 @@ func setEndRoundMsg(message):
 var scoreToWin: float = 10
 var nbCapsules: float = 3
 
+# Shooting
+var power_bar: ProgressBar
+
 
 func _ready() -> void:
 	print("gamestate platformWeb ", platformWeb)
