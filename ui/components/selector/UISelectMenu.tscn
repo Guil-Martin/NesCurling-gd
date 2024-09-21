@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3 uid="uid://dryhynf7pgsh"]
+
+[ext_resource type="Script" path="res://ui/components/selector/UISelectMenu.gd" id="1_mj1mi"]
+[ext_resource type="Resource" uid="uid://xl4kbvwtqosa" path="res://ui/components/selector/avatars/select_blondin_avatar.tres" id="2_5mwpq"]
+[ext_resource type="Resource" uid="uid://drglm5vn2wrmp" path="res://ui/components/selector/avatars/select_cat_avatar.tres" id="3_1mq06"]
+[ext_resource type="Resource" uid="uid://b5f8irer884kn" path="res://ui/components/selector/avatars/select_clown_avatar.tres" id="4_pydog"]
+[ext_resource type="Resource" uid="uid://b3frsjuarsynw" path="res://ui/components/selector/avatars/select_mago_avatar.tres" id="5_a5pmi"]
+[ext_resource type="Resource" uid="uid://clsi80fxufql2" path="res://ui/components/selector/avatars/select_rabbit_avatar.tres" id="6_n0xrn"]
+[ext_resource type="Resource" uid="uid://bifx1qj47rkjj" path="res://ui/components/selector/avatars/select_red_panda_avatar.tres" id="7_08uck"]
+[ext_resource type="Resource" uid="uid://c8n1gexd32m7u" path="res://ui/components/selector/tables/select_base_table.tres" id="8_oryuh"]
+[ext_resource type="Resource" uid="uid://d4lbdxisqtc37" path="res://ui/components/selector/levels/select_office_level.tres" id="9_ytlf4"]
+
+[node name="UISelectMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mj1mi")
+elements = Array[Resource]([ExtResource("2_5mwpq"), ExtResource("3_1mq06"), ExtResource("4_pydog"), ExtResource("5_a5pmi"), ExtResource("6_n0xrn"), ExtResource("7_08uck"), ExtResource("8_oryuh"), ExtResource("9_ytlf4")])
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.167
+anchor_top = 0.11
+anchor_right = 0.833
+anchor_bottom = 0.9
+offset_left = -0.384018
+offset_top = -1.28001
+offset_right = 2.38391
+offset_bottom = -1.20001
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="select_container" type="GridContainer" parent="ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 3

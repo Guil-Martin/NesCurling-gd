@@ -1,14 +1,15 @@
 class_name MenuStart extends Control
 
 @onready var button_quit: Button = %button_quit
-
 @onready var slider_nbcapsules: HSlider = %slider_nbcapsules
 @onready var label_nbcapsules_txt: Label = %label_nbcapsules_txt
-
 @onready var slider_score: HSlider = %slider_score
 @onready var label_score_txt: Label = %label_score_txt
+@onready var ui_select_menu: Control = $UISelectMenu
+@onready var ui_players: VBoxContainer = %ui_players
 
 var select_avatar_slot = -1
+
 
 func _ready() -> void:
 	GameState.menu_start = self
@@ -38,17 +39,3 @@ func _on_button_start_pressed() -> void:
 
 func _on_button_quit_pressed() -> void:
 	get_tree().quit()
-	
-	
-# // Avatar change / # TODO -> to improve
-func change_avatar(chosen_texture: CompressedTexture2D) -> void:
-	if chosen_texture:
-		var players = get_node("%vbox_players").get_children()
-		var pBox: PlayerBox = players[select_avatar_slot]
-		var avatar_btn: TextureButton = pBox.get_node("%avatarBtn")
-		avatar_btn.texture_normal = chosen_texture
-		
-		# Close avatar select windows
-		var avatar_select_window: AvatarSelect = get_node("AvatarSelect")
-		avatar_select_window._on_close_button_pressed()
-		

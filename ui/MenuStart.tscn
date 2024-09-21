@@ -1,10 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://crc8cnukweya5"]
+[gd_scene load_steps=15 format=3 uid="uid://crc8cnukweya5"]
 
 [ext_resource type="Theme" uid="uid://8vbrmwwup85v" path="res://ui/nes_theme.tres" id="1_4o62l"]
 [ext_resource type="Script" path="res://ui/MenuStart.gd" id="1_p8o61"]
 [ext_resource type="Shader" path="res://ui/shaders/bg_scroll.gdshader" id="2_ol466"]
 [ext_resource type="Texture2D" uid="uid://dnlec0e3y23l2" path="res://ui/images/background.png" id="3_34611"]
-[ext_resource type="PackedScene" uid="uid://c8tvt7wc8hudg" path="res://ui/components/PlayerBox.tscn" id="4_x6g6x"]
+[ext_resource type="PackedScene" uid="uid://dryhynf7pgsh" path="res://ui/components/selector/UISelectMenu.tscn" id="3_eo7u8"]
+[ext_resource type="Resource" uid="uid://xl4kbvwtqosa" path="res://ui/components/selector/avatars/select_blondin_avatar.tres" id="4_22chx"]
+[ext_resource type="PackedScene" uid="uid://c8tvt7wc8hudg" path="res://ui/components/start_game_player/PlayerBox.tscn" id="4_x6g6x"]
+[ext_resource type="Resource" uid="uid://drglm5vn2wrmp" path="res://ui/components/selector/avatars/select_cat_avatar.tres" id="5_rlhdo"]
+[ext_resource type="Resource" uid="uid://b5f8irer884kn" path="res://ui/components/selector/avatars/select_clown_avatar.tres" id="6_uvw5a"]
+[ext_resource type="Resource" uid="uid://b3frsjuarsynw" path="res://ui/components/selector/avatars/select_mago_avatar.tres" id="7_7nmyi"]
+[ext_resource type="Resource" uid="uid://clsi80fxufql2" path="res://ui/components/selector/avatars/select_rabbit_avatar.tres" id="8_ux6ta"]
+[ext_resource type="Resource" uid="uid://bifx1qj47rkjj" path="res://ui/components/selector/avatars/select_red_panda_avatar.tres" id="9_o4no5"]
+[ext_resource type="Script" path="res://ui/components/start_game_player/UIStartGamePlayers.gd" id="12_3bpyg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ta6n4"]
 shader = ExtResource("2_ol466")
@@ -44,6 +52,11 @@ texture = ExtResource("3_34611")
 expand_mode = 1
 stretch_mode = 1
 
+[node name="UISelectMenu" parent="." instance=ExtResource("3_eo7u8")]
+visible = false
+layout_mode = 1
+elements = Array[Resource]([ExtResource("4_22chx"), ExtResource("5_rlhdo"), ExtResource("6_uvw5a"), ExtResource("7_7nmyi"), ExtResource("8_ux6ta"), ExtResource("9_o4no5")])
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -59,20 +72,21 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.5, 1.5)
 
-[node name="vbox_players" type="VBoxContainer" parent="VBoxContainer"]
+[node name="ui_players" type="VBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+script = ExtResource("12_3bpyg")
 
-[node name="PlayerBox" parent="VBoxContainer/vbox_players" instance=ExtResource("4_x6g6x")]
+[node name="PlayerBox" parent="VBoxContainer/ui_players" instance=ExtResource("4_x6g6x")]
 layout_mode = 2
 
-[node name="PlayerBox2" parent="VBoxContainer/vbox_players" instance=ExtResource("4_x6g6x")]
+[node name="PlayerBox2" parent="VBoxContainer/ui_players" instance=ExtResource("4_x6g6x")]
 layout_mode = 2
 
-[node name="PlayerBox3" parent="VBoxContainer/vbox_players" instance=ExtResource("4_x6g6x")]
+[node name="PlayerBox3" parent="VBoxContainer/ui_players" instance=ExtResource("4_x6g6x")]
 layout_mode = 2
 
-[node name="PlayerBox4" parent="VBoxContainer/vbox_players" instance=ExtResource("4_x6g6x")]
+[node name="PlayerBox4" parent="VBoxContainer/ui_players" instance=ExtResource("4_x6g6x")]
 layout_mode = 2
 
 [node name="label_nbcapsules" type="Label" parent="VBoxContainer"]

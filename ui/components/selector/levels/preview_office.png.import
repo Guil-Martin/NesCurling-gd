@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://y8lgggt2s2ut"
-path="res://.godot/imported/blondin.png-f49d09a1fef9e8c72d7f5dea3caf8092.ctex"
+uid="uid://cpgrbmbod08c0"
+path="res://.godot/imported/preview_office.png-dccf9a6443e6932ff26d7effa6e1195e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/images/avatars/blondin.png"
-dest_files=["res://.godot/imported/blondin.png-f49d09a1fef9e8c72d7f5dea3caf8092.ctex"]
+source_file="res://ui/components/selector/levels/preview_office.png"
+dest_files=["res://.godot/imported/preview_office.png-dccf9a6443e6932ff26d7effa6e1195e.ctex"]
 
 [params]
 

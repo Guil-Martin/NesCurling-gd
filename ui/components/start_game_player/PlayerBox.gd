@@ -2,6 +2,7 @@ class_name PlayerBox extends HBoxContainer
 
 static var select_avatar_menu_instanciated = -1
 static var player_button_nb: int = 0
+
 var player_button_slot: int
 var select_avatar_menu: PackedScene = preload(GameState.UI_SCENE_PATH + "AvatarSelect" + ".tscn")
 
@@ -14,7 +15,6 @@ func _ready() -> void:
 	# Add 1 to number of total buttons instancied and set the slot of this button instance
 	player_button_slot = player_button_nb
 	player_button_nb += 1
-	GameState.menu_start = get_tree().current_scene
 	
 	input_name.placeholder_text = "Player " + str(player_button_nb)
 	

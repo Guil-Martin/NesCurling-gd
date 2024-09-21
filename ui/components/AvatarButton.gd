@@ -8,6 +8,7 @@ func _ready() -> void:
 	menu_start = get_tree().current_scene
 	avatar_select = menu_start.get_node("AvatarSelect")
 
+
 func _on_btn_pressed() -> void:
 	if avatar.texture:
 		avatar.texture

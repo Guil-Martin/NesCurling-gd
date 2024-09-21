@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://clsi80fxufql2"]
+
+[ext_resource type="Texture2D" uid="uid://blxggwqx585ko" path="res://ui/components/selector/avatars/rabbit.png" id="1_4l68i"]
+[ext_resource type="Script" path="res://ui/components/selector/SelectElement.gd" id="1_w4thk"]
+
+[resource]
+script = ExtResource("1_w4thk")
+name = "Rabbit"
+image = ExtResource("1_4l68i")
+signal_name = "set_avatar"

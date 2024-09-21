@@ -3,6 +3,10 @@ extends Node
 var debug: bool = false
 var platformWeb = OS.has_feature("web") or OS.has_feature("web_android") or OS.has_feature("web_ios")
 
+func _ready() -> void:
+	#connect(selected_level, set_level)
+	print("gamestate platformWeb ", platformWeb)
+	
 # Constants
 const SCENE_PATH: String = "res://scenes/"
 const LEVELS_PATH: String = SCENE_PATH + "levels/"
@@ -37,6 +41,22 @@ var main_level: MainLevel # Ref set in MainLevel _ready
 var current_level_path: String
 var current_table_path: String
 var current_capsule_path: String
+
+### Selector functions, will be triggered when an element in selected in a UISelectMenu ###
+func set_level(element) -> void:
+	print("Level chosen: ", element.name)
+	
+func set_avatar(element) -> void:
+	print("Avatar chosen: ", element.name)
+	
+func set_table(element) -> void:
+	print("Table chosen: ", element.name)
+	
+func set_capsule(element) -> void:
+	print("Capsule set chosen: ", element.name)
+###############
+
+### ==================================================================== ###
 
 # Players
 #var players: Array = []
@@ -83,10 +103,6 @@ var nbCapsules: float = 3
 var power_bar: ProgressBar
 
 
-func _ready() -> void:
-	print("gamestate platformWeb ", platformWeb)
-
-
 func check_if_rules_ready() -> bool:
 	# TODO any change event: if check_if_rules_ready(): then enable start button if returns true
 	# TODO check if rules are ok then enable start button if so
@@ -100,7 +116,7 @@ func start_game() -> void:
 	nbCapsules = slider_nbcapsules.value
 	scoreToWin = slider_score.value
 	
-	var players_boxes: Array = menu_start.get_node("%vbox_players").get_children()
+	var players_boxes: Array = menu_start.get_node("%ui_players").get_children()
 	
 	# Get players box then append an object value in the players array if a name has been entered in the input
 	for player_box:PlayerBox in players_boxes:

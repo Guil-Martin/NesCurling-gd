@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c8tvt7wc8hudg"]
 
-[ext_resource type="Script" path="res://ui/components/PlayerBox.gd" id="1_ey4ed"]
+[ext_resource type="Script" path="res://ui/components/start_game_player/PlayerBox.gd" id="1_ey4ed"]
 [ext_resource type="Texture2D" uid="uid://pausm3irrlfp" path="res://ui/images/cap_white.png" id="2_uxxtb"]
 
 [sub_resource type="Theme" id="Theme_6ep3s"]

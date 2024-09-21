@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://xl4kbvwtqosa"]
+
+[ext_resource type="Script" path="res://ui/components/selector/SelectElement.gd" id="1_43cjr"]
+[ext_resource type="Texture2D" uid="uid://y8lgggt2s2ut" path="res://ui/components/selector/avatars/blondin.png" id="1_lxfgt"]
+
+[resource]
+script = ExtResource("1_43cjr")
+name = "Blondin"
+image = ExtResource("1_lxfgt")
+type = 0

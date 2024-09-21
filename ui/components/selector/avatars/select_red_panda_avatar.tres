@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bifx1qj47rkjj"]
+
+[ext_resource type="Script" path="res://ui/components/selector/SelectElement.gd" id="1_3xwo6"]
+[ext_resource type="Texture2D" uid="uid://cb02y48yk5v7o" path="res://ui/components/selector/avatars/red_panda.png" id="1_xla5d"]
+
+[resource]
+script = ExtResource("1_3xwo6")
+name = "Red Panda"
+image = ExtResource("1_xla5d")
+signal_name = "set_avatar"

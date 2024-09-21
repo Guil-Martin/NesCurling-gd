@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx0f4tf0llq2r"
-path="res://.godot/imported/cat.png-8b795fc3f8b5f7c567a174162af8af81.ctex"
+uid="uid://bnha8jexkib4m"
+path="res://.godot/imported/mago.png-1f571cd56189b561c50acf645457b137.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/images/avatars/cat.png"
-dest_files=["res://.godot/imported/cat.png-8b795fc3f8b5f7c567a174162af8af81.ctex"]
+source_file="res://ui/components/selector/avatars/mago.png"
+dest_files=["res://.godot/imported/mago.png-1f571cd56189b561c50acf645457b137.ctex"]
 
 [params]
 
