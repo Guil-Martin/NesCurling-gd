@@ -56,7 +56,19 @@ func _ready() -> void:
 	nes_capsule.set_surface_override_material(0, material)
 
 
+func _process(delta: float) -> void:
+	if is_charging:
+		update_power_bar(delta)
+
+
+func _physics_process(delta: float) -> void:
+	move_camera(delta)
+	get_move_input(delta)
+	handle_camera_zoom()
+
+
 # Possess the capsule and enable movement in the placement zone
+# TODO Behavior to change -> has to switch to spectating camera towards the score zone, multiple cameras angles ? Markers on table scene for positions ?
 func possess() -> void:
 	if !possessed:
 		possessed = true
@@ -113,7 +125,7 @@ func on_power_released() -> void:
 # SHoot capsule in the camera direction
 func shoot_capsule() -> void:
 	# TODO Switch camera ??
-	var impulse_strength = power_value * power_mult
+	var impulse_strength: float = power_value * power_mult
 	power_value = 0
 	var camera_position: Vector3 = camera_3d.global_transform.origin
 	var direction_to_camera: Vector3 = camera_position - global_transform.origin
@@ -122,23 +134,15 @@ func shoot_capsule() -> void:
 
 	apply_central_impulse(opposite_direction * impulse_strength)
 	
+	#possess()
 	shoot_timer.start()
 
 
+# Uses the ShootTimer node, 2 seconds after the shoot this function triggers
 func _on_shoot_timer_timeout() -> void:
+	#pass
 	# TODO this will be used to go to the next turn, for now let's resume the placing state
 	GameState.state = GameState.States.PLACING
-
-
-func _process(delta: float) -> void:
-	if is_charging:
-		update_power_bar(delta)
-
-
-func _physics_process(delta: float) -> void:
-	move_camera(delta)
-	get_move_input(delta)
-	handle_camera_zoom()
 
 
 # In _process, each frame we fill and deplete the power bar using the value shader parameter until the click is released

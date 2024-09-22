@@ -4,33 +4,21 @@ var debug: bool = false
 var platformWeb = OS.has_feature("web") or OS.has_feature("web_android") or OS.has_feature("web_ios")
 
 func _ready() -> void:
-	#connect(selected_level, set_level)
 	print("gamestate platformWeb ", platformWeb)
 	
-# Constants
+	# Set default values
+	const SELECT_OFFICE_LEVEL = preload("res://ui/components/selector/levels/select_office_level.tres")
+	const SELECT_BASE_TABLE = preload("res://ui/components/selector/tables/select_base_table.tres")
+	current_level = SELECT_OFFICE_LEVEL
+	current_table = SELECT_BASE_TABLE
+	
+# Paths
 const SCENE_PATH: String = "res://scenes/"
 const LEVELS_PATH: String = SCENE_PATH + "levels/"
-const UI_SCENE_PATH: String = "res://ui/components/"
+const UI_PATH: String = "res://ui/"
+const UI_SCENE_PATH: String = UI_PATH + "components/"
 const AVATAR_PATH: String = "res://ui/images/avatars/"
 const RESOURCES_PATH: String = "res://resources/"
-
-const CAPSULES_PATH: String = SCENE_PATH + "nes_capsules/"
-const CAPSULES: Dictionary = {
-	"base" = CAPSULES_PATH + "base/nes_capsule.tscn"
-}
-
-const TABLES_PATH: String = SCENE_PATH + "nes_tables/"
-const TABLES: Dictionary = {
-	"base" = TABLES_PATH + "base/nes_table.tscn"
-}
-
-#const BASE_LEVEL = preload(LEVELS_PATH + "BaseLevel.tscn")
-const LEVELS: Dictionary = {
-	"main" = LEVELS_PATH + "MainLevel.tscn",
-	"office" = LEVELS_PATH + "office/level_office.tscn"
-}
-
-var AVATAR_NAMES: Array = ["blondin", "cat", "clown", "mago", "rabbit", "red_panda"]
 
 # UI
 var menu_start: MenuStart # Ref set in MenuStart _ready
@@ -38,28 +26,33 @@ var game_ui: UIGame # Ref set in UIGame _ready
 
 # level
 var main_level: MainLevel # Ref set in MainLevel _ready
-var current_level_path: String
-var current_table_path: String
-var current_capsule_path: String
+var current_level: Resource
+var current_table: Resource
 
-### Selector functions, will be triggered when an element in selected in a UISelectMenu ###
-func set_level(element) -> void:
-	print("Level chosen: ", element.name)
+### Selector functions, will be triggered when an element in selected in a UISelectMenu and will emit a corresponding signal ###
+signal set_avatar_s
+signal set_level_s
+signal set_table_s
+signal set_capsule_s
 	
 func set_avatar(element) -> void:
-	print("Avatar chosen: ", element.name)
+	emit_signal("set_avatar_s", element)
+
+func set_level(element) -> void:
+	emit_signal("set_level_s", element)
+	current_level = element
 	
 func set_table(element) -> void:
-	print("Table chosen: ", element.name)
+	emit_signal("set_table_s", element)
+	current_table = element
 	
 func set_capsule(element) -> void:
-	print("Capsule set chosen: ", element.name)
+	emit_signal("set_capsule_s", element)
 ###############
 
 ### ==================================================================== ###
 
 # Players
-#var players: Array = []
 var players: Array[Player]
 var playingPlayer: Player
 
@@ -130,16 +123,11 @@ func start_game() -> void:
 	state = States.SPECTATING;
 	turn = 1
 	round = 1
-	
-	current_table_path = TABLES.get("base")
-	current_capsule_path = CAPSULES.get("base")
-	current_level_path = LEVELS.get("office")
-	
+		
 	if check_if_rules_ready():
-		get_tree().call_deferred("change_scene_to_file", LEVELS.get("main"))
+		get_tree().call_deferred("change_scene_to_file", LEVELS_PATH + "MainLevel.tscn")
 
 
-# TODO enable/disable collisions does not work properly
 # Enter a state of placing the capsule on the placement zone, enable the given collision to make the capsule stay in the zone
 func placement(capsule: NesCapsule) -> void:
 	if state != States.PLACING:
@@ -156,7 +144,7 @@ func placement(capsule: NesCapsule) -> void:
 		state = States.SPECTATING
 
 
-# TODO get all capsule ref and delete (to put in a fonction)
+# TODO
 func resetGame() -> void:
 	turn = 0
 	round = 0

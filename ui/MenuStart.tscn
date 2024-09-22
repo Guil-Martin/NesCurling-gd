@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://crc8cnukweya5"]
+[gd_scene load_steps=18 format=3 uid="uid://crc8cnukweya5"]
 
 [ext_resource type="Theme" uid="uid://8vbrmwwup85v" path="res://ui/nes_theme.tres" id="1_4o62l"]
 [ext_resource type="Script" path="res://ui/MenuStart.gd" id="1_p8o61"]
@@ -6,13 +6,16 @@
 [ext_resource type="Texture2D" uid="uid://dnlec0e3y23l2" path="res://ui/images/background.png" id="3_34611"]
 [ext_resource type="PackedScene" uid="uid://dryhynf7pgsh" path="res://ui/components/selector/UISelectMenu.tscn" id="3_eo7u8"]
 [ext_resource type="Resource" uid="uid://xl4kbvwtqosa" path="res://ui/components/selector/avatars/select_blondin_avatar.tres" id="4_22chx"]
-[ext_resource type="PackedScene" uid="uid://c8tvt7wc8hudg" path="res://ui/components/start_game_player/PlayerBox.tscn" id="4_x6g6x"]
 [ext_resource type="Resource" uid="uid://drglm5vn2wrmp" path="res://ui/components/selector/avatars/select_cat_avatar.tres" id="5_rlhdo"]
 [ext_resource type="Resource" uid="uid://b5f8irer884kn" path="res://ui/components/selector/avatars/select_clown_avatar.tres" id="6_uvw5a"]
 [ext_resource type="Resource" uid="uid://b3frsjuarsynw" path="res://ui/components/selector/avatars/select_mago_avatar.tres" id="7_7nmyi"]
 [ext_resource type="Resource" uid="uid://clsi80fxufql2" path="res://ui/components/selector/avatars/select_rabbit_avatar.tres" id="8_ux6ta"]
 [ext_resource type="Resource" uid="uid://bifx1qj47rkjj" path="res://ui/components/selector/avatars/select_red_panda_avatar.tres" id="9_o4no5"]
 [ext_resource type="Script" path="res://ui/components/start_game_player/UIStartGamePlayers.gd" id="12_3bpyg"]
+[ext_resource type="Resource" uid="uid://c8n1gexd32m7u" path="res://ui/components/selector/tables/select_base_table.tres" id="12_mpuas"]
+[ext_resource type="Resource" uid="uid://d4lbdxisqtc37" path="res://ui/components/selector/levels/select_office_level.tres" id="13_sjids"]
+[ext_resource type="Texture2D" uid="uid://cpgrbmbod08c0" path="res://ui/components/selector/levels/preview_office.png" id="16_gu6h4"]
+[ext_resource type="Texture2D" uid="uid://birom0fqu6tl2" path="res://ui/components/selector/tables/preview_base_table.png" id="17_dycf3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ta6n4"]
 shader = ExtResource("2_ol466")
@@ -52,52 +55,56 @@ texture = ExtResource("3_34611")
 expand_mode = 1
 stretch_mode = 1
 
-[node name="UISelectMenu" parent="." instance=ExtResource("3_eo7u8")]
-visible = false
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-elements = Array[Resource]([ExtResource("4_22chx"), ExtResource("5_rlhdo"), ExtResource("6_uvw5a"), ExtResource("7_7nmyi"), ExtResource("8_ux6ta"), ExtResource("9_o4no5")])
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.382
-anchor_top = 0.28
-anchor_right = 0.628
-anchor_bottom = 0.714
-offset_left = -0.440063
-offset_top = -0.399994
-offset_right = -157.96
-offset_bottom = -156.12
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -202.0
+offset_top = -305.0
+offset_right = 128.0
+offset_bottom = 195.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.5, 1.5)
+scale = Vector2(1.2, 1.2)
+size_flags_vertical = 3
 
-[node name="ui_players" type="VBoxContainer" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="button_add_player" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "+ Ajouter joueur"
+
+[node name="ui_players" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("12_3bpyg")
 
-[node name="PlayerBox" parent="VBoxContainer/ui_players" instance=ExtResource("4_x6g6x")]
-layout_mode = 2
-
-[node name="PlayerBox2" parent="VBoxContainer/ui_players" instance=ExtResource("4_x6g6x")]
-layout_mode = 2
-
-[node name="PlayerBox3" parent="VBoxContainer/ui_players" instance=ExtResource("4_x6g6x")]
-layout_mode = 2
-
-[node name="PlayerBox4" parent="VBoxContainer/ui_players" instance=ExtResource("4_x6g6x")]
-layout_mode = 2
-
-[node name="label_nbcapsules" type="Label" parent="VBoxContainer"]
+[node name="label_nbcapsules" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 text = "Nombre de capsules :"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="nb_cap_box" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="slider_nbcapsules" type="HSlider" parent="VBoxContainer/HBoxContainer"]
+[node name="slider_nbcapsules" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/nb_cap_box"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -108,23 +115,23 @@ rounded = true
 tick_count = 10
 ticks_on_borders = true
 
-[node name="label_nbcapsules_txt" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="label_nbcapsules_txt" type="Label" parent="Panel/MarginContainer/VBoxContainer/nb_cap_box"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 text = "0
 "
 
-[node name="label_score" type="Label" parent="VBoxContainer"]
+[node name="label_score" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 text = "Score à atteindre :"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="score_box" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="slider_score" type="HSlider" parent="VBoxContainer/HBoxContainer2"]
+[node name="slider_score" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/score_box"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -134,14 +141,53 @@ value = 10.0
 tick_count = 20
 ticks_on_borders = true
 
-[node name="label_score_txt" type="Label" parent="VBoxContainer/HBoxContainer2"]
+[node name="label_score_txt" type="Label" parent="Panel/MarginContainer/VBoxContainer/score_box"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 text = "0
 "
 
-[node name="button_start" type="Button" parent="VBoxContainer"]
+[node name="labels_level_table_box" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/labels_level_table_box"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Level"
+
+[node name="Label2" type="Label" parent="Panel/MarginContainer/VBoxContainer/labels_level_table_box"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Table"
+
+[node name="btns_level_table_box" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="selected_level" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/btns_level_table_box"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = ExtResource("16_gu6h4")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="selected_table" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/btns_level_table_box"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = ExtResource("17_dycf3")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="button_start" type="Button" parent="Panel/MarginContainer/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
@@ -151,7 +197,7 @@ theme = ExtResource("1_4o62l")
 text = "Démarrer
 "
 
-[node name="button_quit" type="Button" parent="VBoxContainer"]
+[node name="button_quit" type="Button" parent="Panel/MarginContainer/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
@@ -159,7 +205,38 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 text = "Quitter"
 
-[connection signal="value_changed" from="VBoxContainer/HBoxContainer/slider_nbcapsules" to="." method="_on_slider_nbcapsules_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/HBoxContainer2/slider_score" to="." method="_on_slider_score_value_changed"]
-[connection signal="pressed" from="VBoxContainer/button_start" to="." method="_on_button_start_pressed"]
-[connection signal="pressed" from="VBoxContainer/button_quit" to="." method="_on_button_quit_pressed"]
+[node name="UIAvatarSelectMenu" parent="." instance=ExtResource("3_eo7u8")]
+visible = false
+layout_mode = 2
+anchors_preset = 0
+offset_bottom = 6.10352e-05
+elements = Array[Resource]([ExtResource("4_22chx"), ExtResource("5_rlhdo"), ExtResource("6_uvw5a"), ExtResource("7_7nmyi"), ExtResource("8_ux6ta"), ExtResource("9_o4no5")])
+
+[node name="UILevelSelectMenu" parent="." instance=ExtResource("3_eo7u8")]
+visible = false
+layout_mode = 2
+anchors_preset = 0
+offset_bottom = 6.10352e-05
+elements = Array[Resource]([ExtResource("13_sjids")])
+
+[node name="UITableSelectMenu" parent="." instance=ExtResource("3_eo7u8")]
+visible = false
+layout_mode = 2
+anchors_preset = 0
+offset_bottom = 6.10352e-05
+elements = Array[Resource]([ExtResource("12_mpuas")])
+
+[node name="UICapsuleSelectMenu" parent="." instance=ExtResource("3_eo7u8")]
+visible = false
+layout_mode = 2
+anchors_preset = 0
+offset_bottom = 6.10352e-05
+elements = Array[Resource]([ExtResource("13_sjids")])
+
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/button_add_player" to="." method="_on_button_add_player_pressed"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/nb_cap_box/slider_nbcapsules" to="." method="_on_slider_nbcapsules_value_changed"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/score_box/slider_score" to="." method="_on_slider_score_value_changed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/btns_level_table_box/selected_level" to="." method="_on_selected_level_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/btns_level_table_box/selected_table" to="." method="_on_selected_table_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/VBoxContainer/button_start" to="." method="_on_button_start_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/VBoxContainer/button_quit" to="." method="_on_button_quit_pressed"]

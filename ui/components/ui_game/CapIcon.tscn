@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" path="res://ui/shaders/cap_color.gdshader" id="1_0u20r"]
 [ext_resource type="Texture2D" uid="uid://pausm3irrlfp" path="res://ui/images/cap_white.png" id="2_l86x5"]
-[ext_resource type="Script" path="res://ui/components/CapIcon.gd" id="3_b2yb7"]
+[ext_resource type="Script" path="res://ui/components/ui_game/CapIcon.gd" id="3_b2yb7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dxth5"]
 shader = ExtResource("1_0u20r")

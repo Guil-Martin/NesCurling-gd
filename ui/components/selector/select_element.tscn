@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://c85vtofucit4q"]
+
+[ext_resource type="Texture2D" uid="uid://c21u8pp3huwlh" path="res://ui/components/selector/ui_avatar_btn/avatar_btn.png" id="1_xmrh8"]
+[ext_resource type="Texture2D" uid="uid://y8lgggt2s2ut" path="res://ui/components/selector/avatars/blondin.png" id="2_wo4q5"]
+[ext_resource type="Texture2D" uid="uid://162yag57stmj" path="res://ui/components/selector/ui_avatar_btn/avatar_btn_outline.png" id="3_p8wwo"]
+[ext_resource type="Texture2D" uid="uid://oaqd5n4ickiv" path="res://ui/components/selector/ui_avatar_btn/avatar_btn_hover.png" id="4_7ovoh"]
+
+[node name="select_element" type="PanelContainer"]
+custom_minimum_size = Vector2(256, 256)
+
+[node name="background" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("1_xmrh8")
+expand_mode = 1
+
+[node name="image" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("2_wo4q5")
+expand_mode = 1
+
+[node name="button" type="TextureButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = ExtResource("3_p8wwo")
+texture_hover = ExtResource("4_7ovoh")
+ignore_texture_size = true

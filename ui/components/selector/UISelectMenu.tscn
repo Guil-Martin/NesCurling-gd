@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dryhynf7pgsh"]
+[gd_scene load_steps=11 format=3 uid="uid://dryhynf7pgsh"]
 
 [ext_resource type="Script" path="res://ui/components/selector/UISelectMenu.gd" id="1_mj1mi"]
 [ext_resource type="Resource" uid="uid://xl4kbvwtqosa" path="res://ui/components/selector/avatars/select_blondin_avatar.tres" id="2_5mwpq"]
@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://bifx1qj47rkjj" path="res://ui/components/selector/avatars/select_red_panda_avatar.tres" id="7_08uck"]
 [ext_resource type="Resource" uid="uid://c8n1gexd32m7u" path="res://ui/components/selector/tables/select_base_table.tres" id="8_oryuh"]
 [ext_resource type="Resource" uid="uid://d4lbdxisqtc37" path="res://ui/components/selector/levels/select_office_level.tres" id="9_ytlf4"]
+[ext_resource type="Texture2D" uid="uid://bl87rgcdoylxx" path="res://ui/images/ui_close.png" id="10_wpfuh"]
 
 [node name="UISelectMenu" type="Control"]
 layout_mode = 3
@@ -28,20 +29,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="button_close" type="TextureButton" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.167
-anchor_top = 0.11
-anchor_right = 0.833
-anchor_bottom = 0.9
-offset_left = -0.384018
-offset_top = -1.28001
-offset_right = 2.38391
-offset_bottom = -1.20001
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 392.0
+offset_top = -500.0
+offset_right = 492.0
+offset_bottom = -400.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+texture_normal = ExtResource("10_wpfuh")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(768, 1000)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="select_container" type="GridContainer" parent="ScrollContainer"]
 unique_name_in_owner = true
@@ -51,3 +69,5 @@ size_flags_vertical = 3
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 3
+
+[connection signal="pressed" from="button_close" to="." method="_on_button_close_pressed"]

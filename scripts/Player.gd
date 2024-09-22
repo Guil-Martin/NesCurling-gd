@@ -14,7 +14,7 @@ func add_capsule(capsule: NesCapsule) -> void:
 # Remove the given ref capsule from the capsule array for this player
 # Returns true if successfully removed, false otherwise
 func remove_capsule(capRef: NesCapsule) -> bool:
-	var index = capsules.find(capRef)
+	var index: int = capsules.find(capRef)
 	if index != -1:
 		capsules.remove_at(index)
 		return true

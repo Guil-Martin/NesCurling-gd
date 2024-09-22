@@ -1,44 +1,50 @@
-extends VBoxContainer
+class_name UIStartGamePlayers extends VBoxContainer
 
 const PLAYER_BOX = preload("res://ui/components/start_game_player/PlayerBox.tscn")
+var select_avatar_slot: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
-	#var player_box = PLAYER_BOX.instantiate()
-	#add_child(player_box)
+	# Connect set avatar signal from GameState to change the avatar of the given player box's avatar button 
+	GameState.set_avatar_s.connect(set_avatar)
+	
+	# Add at least one player each time
+	add_player_box()
+	
+	# TODO, add buttons to add player, or handle this with multiplayer socket function ? Or both to play locally ?
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+# Returns the size of how many PlayerBox item have been added
+func player_boxes_length() -> int:
+	return get_children().size()
 
 
-#func open_select_avatar() -> void:
-	#if !ui_select_menu.visible:
-		#ui_select_menu.visible = true
-		#
-	#if select_avatar_menu:
-		#select_avatar_menu_instanciated = GameState.menu_start.select_avatar_slot
-		#select_avatar_menu_instance = select_avatar_menu.instantiate()
-		#owner.add_child(select_avatar_menu_instance)
-#
-			#
-#func close_select_avatar() -> void:
-	#if select_avatar_menu:
-		#if select_avatar_menu_instance != null:
-			#select_avatar_menu_instanciated = -1
-			#select_avatar_menu_instance.queue_free();
-			## Set to null since before the instance is deleted _process will run this again thus crashing because the instance is already in a queue free state
-			#select_avatar_menu_instance = null
-#
-## // Avatar change / # TODO -> to improve
-#func change_avatar(chosen_texture: CompressedTexture2D) -> void:
-	#if chosen_texture:
-		#var pBox: PlayerBox = ui_players[select_avatar_slot]
-		#var avatar_btn: TextureButton = pBox.get_node("%avatarBtn")
-		#avatar_btn.texture_normal = chosen_texture
-		#
-		## Close avatar select windows
-		#var avatar_select_window: AvatarSelect = get_node("AvatarSelect")
-		#avatar_select_window._on_close_button_pressed()
+# Add new layer box parameters
+func add_player_box() -> void:
+	var addedBoxes: int = player_boxes_length()
+	if addedBoxes < 4:
+		var pBox: PlayerBox = PLAYER_BOX.instantiate()
+		add_child(pBox)
+		pBox.setup(addedBoxes)
+
+
+func remove_player(slot: int) -> void:
+	var pboxes: Array = get_children()
+	pboxes[slot].queue_free()
+	pboxes.remove_at(slot)
+	var pboxes_len = pboxes.size()
+	if pboxes_len > 0:
+		for i in range(0, pboxes_len):
+			pboxes[i].setup(i)
+
+
+# Callable from the signal of each avatar button of player boxes
+func open_select_avatar(slot: int) -> void:
+	select_avatar_slot = slot
+	GameState.menu_start.ui_avatar_select_menu.visible = true
+
+
+# Triggered from SelectElement 
+func set_avatar(avatar: Resource) -> void:
+	var pBox: PlayerBox = get_children()[select_avatar_slot]
+	pBox.get_node("avatarBtn").texture_normal = avatar.image

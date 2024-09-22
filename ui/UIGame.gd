@@ -9,9 +9,9 @@ class_name UIGame extends Control
 @onready var players_box: VBoxContainer = %ui_players_box
 @onready var power_bar: ProgressBar = %power_bar
 
-const CAP_ICON = preload("res://ui/components/CapIcon.tscn")
+const CAP_ICON = preload("res://ui/components/ui_game/CapIcon.tscn")
 const NES_CAPSULE = preload("res://scenes/nes_capsules/base/nes_capsule.tscn")
-const UI_GAME_P_BOX = preload("res://ui/components/UIGamePBox.tscn")
+const UI_GAME_P_BOX = preload("res://ui/components/ui_game/UIGamePBox.tscn")
 
 func _ready() -> void:
 	GameState.game_ui = self

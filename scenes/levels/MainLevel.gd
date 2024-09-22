@@ -14,14 +14,13 @@ func _ready() -> void:
 	# Self ref in GameState to be accessed from everywhere
 	GameState.main_level = self
 	
-	# Loads and instantiate the chosen level then add it to the scene
-	var current_level_scn: PackedScene = load(GameState.current_level_path)
-	current_level = current_level_scn.instantiate()
+	# Instantiate the chosen level then add it to the scene
+	#var current_level_scn: PackedScene = load(GameState.current_level_path)
+	current_level = GameState.current_level.scene.instantiate()  # current_level_scn.instantiate()
 	add_child(current_level)
 	
-	# Loads and instantiate the chosen table then add it to the scene
-	var current_table_scn: PackedScene = load(GameState.current_table_path)
-	current_table = current_table_scn.instantiate()
+	# Instantiate the chosen table then add it to the scene
+	current_table = GameState.current_table.scene.instantiate()
 	add_child(current_table)
 	
 	# Get current loaded level markers to place table & cam
@@ -36,10 +35,8 @@ func _ready() -> void:
 	current_table.rotation = marker_table.rotation
 	
 	setup_camera()
-	
-	var current_capsule_scn: PackedScene = load(GameState.current_capsule_path)
-	
-	
+
+
 # Move camera to the level's camera marker then 180 on z axis
 func setup_camera() -> void:
 	main_camera.position = marker_cam.position
