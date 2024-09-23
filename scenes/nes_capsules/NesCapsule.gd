@@ -19,19 +19,22 @@ var yaw: float = 0
 var pitch: float = 0
 var yaw_sensitivity: float = 0.07
 var pitch_sensitivity: float = 0.07
-var yaw_acceleration: float = 15
-var pitch_acceleration: float = 15
+var yaw_acceleration: float = 15.0
+var pitch_acceleration: float = 15.0
 var pitch_min: float = -10
-var pitch_max: float = 75
+var pitch_max: float = 75.0
 
 # SpringArm zoom settings
 var max_arm_length: float = 1.5
 var min_arm_length: float = 0.5
-var zoom_speed: float = 3
+var zoom_speed: float = 3.0
+var max_y_offset: float = 1.5
+var min_y_offset: float = 0.4
+var y_offset_speed: float = 2.0
 
 # Movement placement
 var possessed: bool = false;
-var move_speed: float = 15
+var move_speed: float = 1.4
 var turn_speed: float = 2.0
 var upright_strength: float = 2.0
 var zqsd_mode: bool = false # Set this to true to switch to ZQSD
@@ -40,7 +43,7 @@ var zqsd_mode: bool = false # Set this to true to switch to ZQSD
 var is_charging: bool = false
 var is_filling: bool = true  # Track if the bar is filling or emptying
 var power_value: float = 0.0  # Current power value (0.0 to 1.0)
-var power_mult: float = 15.0
+var power_mult: float = 1.4
 var power_speed: float = 1.5  # Speed at which the bar fills/empties
 
 
@@ -49,6 +52,7 @@ func _ready() -> void:
 	#player_owner = the current palyer
 	GameState.last_capsule = self
 	
+	# TODO check current player remaining capsule then take its informations to change the skin of the spawned capsule
 	# Set color for this capsule, copy material so it's different from the base one (or it'll change the material color for all capsule instances)
 	var material = nes_capsule.get_active_material(0).duplicate()
 	color = Color(randf(), randf(), randf())
@@ -68,21 +72,16 @@ func _physics_process(delta: float) -> void:
 
 
 # Possess the capsule and enable movement in the placement zone
-# TODO Behavior to change -> has to switch to spectating camera towards the score zone, multiple cameras angles ? Markers on table scene for positions ?
 func possess() -> void:
-	if !possessed:
-		possessed = true
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		lock_rotation = true # Bugged, cannot be re-eabled with Rapier3D
-		global_rotation = Vector3.ZERO
-		#global_position = (Vector3(global_position.x, global_position.y +0.1, global_position.z))
-		camera_3d.make_current()
-	else:
-		lock_rotation = false
-		possessed = false
-		
-	# placement function will set the state to PLACING & spawn the collision around the placement zone
-	GameState.placement(self)
+	possessed = true
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	lock_rotation = true
+	global_rotation = Vector3.ZERO
+	global_position = (Vector3(global_position.x, global_position.y +0.1, global_position.z))
+	camera_3d.make_current()
+	
+	GameState.toggle_table_placement_collisions(true)
+	GameState.state = GameState.States.PLACING
 
 
 func _input(event: InputEvent) -> void:
@@ -109,14 +108,20 @@ func _input(event: InputEvent) -> void:
 
 
 func on_power_released() -> void:
+	GameState.state = GameState.States.SHOOTING
+	GameState.toggle_table_placement_collisions(false)
+	GameState.switch_camera("top")
+	lock_rotation = false
+	
 	# Get the current value of the progress bar and set power_value
 	power_value = GameState.power_bar.material.get_shader_parameter("value")
 	
-	GameState.state = GameState.States.SHOOTING
 	# Stop charging when button is released and Reset power bar value
 	is_charging = false
 	GameState.power_bar.material.set_shader_parameter("value", 0)
 	GameState.power_bar.visible = false
+	
+	#GameState.state = GameState.States.PLACING
 	
 	# Shoot capsule
 	shoot_capsule()
@@ -124,7 +129,6 @@ func on_power_released() -> void:
 
 # SHoot capsule in the camera direction
 func shoot_capsule() -> void:
-	# TODO Switch camera ??
 	var impulse_strength: float = power_value * power_mult
 	power_value = 0
 	var camera_position: Vector3 = camera_3d.global_transform.origin
@@ -134,15 +138,15 @@ func shoot_capsule() -> void:
 
 	apply_central_impulse(opposite_direction * impulse_strength)
 	
-	#possess()
 	shoot_timer.start()
 
 
 # Uses the ShootTimer node, 2 seconds after the shoot this function triggers
 func _on_shoot_timer_timeout() -> void:
-	#pass
-	# TODO this will be used to go to the next turn, for now let's resume the placing state
-	GameState.state = GameState.States.PLACING
+	# TODO check is there is a capsule in the placement zone then move it is so
+	possessed = false
+	GameState.next_turn()
+	GameState.spawn_capsule() # TODO test, to remove
 
 
 # In _process, each frame we fill and deplete the power bar using the value shader parameter until the click is released
@@ -162,9 +166,24 @@ func update_power_bar(delta: float) -> void:
 	GameState.power_bar.material.set_shader_parameter("value", power_value)
 
 
+# Move camera horizontally and vertically while the capsule is possessed
+func move_camera(delta: float) -> void:
+	if possessed:
+		pitch = clamp(pitch, pitch_min, pitch_max)
+		cam_yaw.rotation_degrees.y = lerp(cam_yaw.rotation.y, yaw, yaw_acceleration * delta)
+		cam_pitch.rotation_degrees.x = lerp(cam_pitch.rotation_degrees.x, pitch, pitch_acceleration * delta)
+		# Settings values directly with no smooth camera
+		#cam_yaw.rotation_degrees.y = yaw
+		#cam_pitch.rotation_degrees.x = pitch
+		
+		nes_capsule.rotation_degrees.y = cam_yaw.rotation_degrees.y
+		collision_shape_3d.rotation_degrees.y = cam_yaw.rotation_degrees.y
+		collision_shape_3d_2.rotation_degrees.y = cam_yaw.rotation_degrees.y
+
+
 # Move the capsule
 func get_move_input(delta: float) -> void:
-	if possessed && GameState.state == GameState.States.PLACING:
+	if possessed && !is_charging && GameState.state == GameState.States.PLACING:
 		var input_dir: Vector2 = Input.get_vector("move_right", "move_left", "move_backward", "move_forward" )
 		var direction: Vector3 = (cam_yaw.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if input_dir != Vector2(0,0):
@@ -172,21 +191,6 @@ func get_move_input(delta: float) -> void:
 			var cam_direction: float = camera_3d.rotation_degrees.y - rad_to_deg(input_dir.angle()) + 90
 			# Apply force in the direction of movement
 			apply_central_force(direction * move_speed)
-
-
-# Move camera horizontally and vertically while the capsule is possessed
-func move_camera(delta: float) -> void:
-	if possessed:
-		pitch = clamp(pitch, pitch_min, pitch_max)
-		cam_yaw.rotation_degrees.y = lerp(cam_yaw.rotation.y, yaw, yaw_acceleration * delta)
-		cam_pitch.rotation_degrees.x = lerp(cam_pitch.rotation_degrees.x, pitch, pitch_acceleration * delta)
-		# Settings values directly = no smooth camera
-		#cam_yaw.rotation_degrees.y = yaw
-		#cam_pitch.rotation_degrees.x = pitch
-		
-		nes_capsule.rotation_degrees.y = cam_yaw.rotation_degrees.y
-		collision_shape_3d.rotation_degrees.y = cam_yaw.rotation_degrees.y
-		collision_shape_3d_2.rotation_degrees.y = cam_yaw.rotation_degrees.y
 
 
 # Zoom the camera in and out by changing the SpringArm length
@@ -197,8 +201,13 @@ func handle_camera_zoom() -> void:
 		scroll_input = -1
 	elif Input.is_action_just_released("cam_backward"):
 		scroll_input = 1
+		
+	# Update the spring arm's Y position by adjusting its translation along the y-axis
+	var new_y_offset = clamp(spring_arm_3d.transform.origin.y + scroll_input * y_offset_speed * get_physics_process_delta_time(), min_y_offset, max_y_offset)
+	spring_arm_3d.transform.origin.y = new_y_offset
 
-	spring_arm_3d.spring_length = clamp(spring_arm_3d.spring_length + scroll_input * zoom_speed * get_physics_process_delta_time(), min_arm_length, max_arm_length)
+	# Zoom
+	#spring_arm_3d.spring_length = clamp(spring_arm_3d.spring_length + scroll_input * zoom_speed * get_physics_process_delta_time(), min_arm_length, max_arm_length)
 
 
 #func _to_string() -> String:

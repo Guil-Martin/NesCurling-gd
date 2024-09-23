@@ -58,11 +58,12 @@ size = Vector3(0.233344, 1.42578, 1.37254)
 [sub_resource type="BoxShape3D" id="BoxShape3D_iou8g"]
 size = Vector3(4.47924, 1.42578, 0.239227)
 
-[node name="NesTable" type="StaticBody3D" node_paths=PackedStringArray("spawn_point", "score_zone", "placement_cols")]
+[node name="NesTable" type="StaticBody3D" node_paths=PackedStringArray("spawn_point", "score_zone", "placement_cols", "cameras")]
 script = ExtResource("1_0bkxe")
 spawn_point = NodePath("spawn_point")
 score_zone = NodePath("score_zone")
-placement_cols = [NodePath("placement_col"), NodePath("placement_col2"), NodePath("placement_col3")]
+placement_cols = [NodePath("placement_col"), NodePath("placement_col2"), NodePath("placement_col3"), NodePath("placement_col4")]
+cameras = [NodePath("angle_top")]
 
 [node name="nesTable" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_a6cb1")
@@ -115,6 +116,22 @@ input_ray_pickable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="placement_col3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00135982, 0, 0.264053)
 shape = SubResource("BoxShape3D_iou8g")
+
+[node name="placement_col4" type="StaticBody3D" parent="."]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.062, -3.02369)
+collision_layer = 4
+collision_mask = 0
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="placement_col4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00135982, 0, 0.264053)
+shape = SubResource("BoxShape3D_iou8g")
+
+[node name="angle_top" type="Camera3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 3.80315e-08, 5.60221, 3.54717)
+projection = 1
+size = 3.02
 
 [connection signal="body_entered" from="score_zone" to="." method="_on_score_zone_body_entered"]
 [connection signal="body_exited" from="score_zone" to="." method="_on_score_zone_body_exited"]

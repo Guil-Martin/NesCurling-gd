@@ -52,6 +52,7 @@ radius = 0.07
 [node name="NesCapsule" type="RigidBody3D"]
 collision_layer = 2
 collision_mask = 7
+mass = 0.08
 center_of_mass_mode = 1
 script = ExtResource("1_ktcok")
 
@@ -78,14 +79,14 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
 shape = SubResource("SphereShape3D_25yy6")
-spring_length = 0.5
+spring_length = 2.5
 
 [node name="Camera3D" type="Camera3D" parent="camRoot/camYaw/camPitch/SpringArm3D"]
 unique_name_in_owner = true
 
 [node name="ShootTimer" type="Timer" parent="."]
 process_callback = 0
-wait_time = 2.0
+wait_time = 2.5
 one_shot = true
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

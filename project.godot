@@ -37,6 +37,7 @@ enabled=PackedStringArray()
 [file_customization]
 
 folder_colors={
+"res://audio/": "yellow",
 "res://images/": "yellow",
 "res://resources/": "purple",
 "res://scenes/": "orange",

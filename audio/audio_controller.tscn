@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmfhn54ult1s1"]
+
+[ext_resource type="Script" path="res://audio/AudioController.gd" id="1_wpgcc"]
+
+[node name="AudioController" type="Node3D"]
+script = ExtResource("1_wpgcc")

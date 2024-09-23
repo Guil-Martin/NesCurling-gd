@@ -42,13 +42,10 @@ func set_turn(turn: int) -> void:
 
 # SpawnCapsule button (Test)
 func _on_spawn_capsule_pressed() -> void:
-	# Instantiate a nes capsule object on the Marker3D spawn point of the current table
-	if GameState.main_level.main_camera.current:
-		var nes_capsule_i: NesCapsule = NES_CAPSULE.instantiate()
-		owner.add_child(nes_capsule_i)
-		nes_capsule_i.global_transform.origin = GameState.main_level.current_table.spawn_point.global_transform.origin
-		#nes_capsule_i.translate(GameState.main_level.current_table.spawn_point.global_transform.origin)
-	
+	# Makes sure the state is SPECTATING to spawn a capsule
+	if GameState.state == GameState.States.SPECTATING:
+		GameState.spawn_capsule()
+
 
 func _on_delete_all_pressed() -> void:
 	if GameState.main_level.main_camera.current:

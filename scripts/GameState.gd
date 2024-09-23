@@ -3,6 +3,8 @@ extends Node
 var debug: bool = false
 var platformWeb = OS.has_feature("web") or OS.has_feature("web_android") or OS.has_feature("web_ios")
 
+const NES_CAPSULE = preload("res://scenes/nes_capsules/base/nes_capsule.tscn")
+
 func _ready() -> void:
 	print("gamestate platformWeb ", platformWeb)
 	
@@ -128,20 +130,35 @@ func start_game() -> void:
 		get_tree().call_deferred("change_scene_to_file", LEVELS_PATH + "MainLevel.tscn")
 
 
-# Enter a state of placing the capsule on the placement zone, enable the given collision to make the capsule stay in the zone
-func placement(capsule: NesCapsule) -> void:
-	if state != States.PLACING:
-		for collision: StaticBody3D in main_level.current_table.placement_cols:
-			collision.process_mode = Node.PROCESS_MODE_INHERIT
+# Enable or disable the collisions on the table placement zone
+func toggle_table_placement_collisions(enable: bool) -> void:
+	for collision: StaticBody3D in main_level.current_table.placement_cols:
+		collision.process_mode = Node.PROCESS_MODE_INHERIT if enable else Node.PROCESS_MODE_DISABLED
 
-		state = States.PLACING
-	else:
+
+func switch_camera(cameraRef: String) -> void:
+	if cameraRef == "main":
 		main_level.setup_camera() # Reset camera position
 		main_level.main_camera.make_current() # Switch to the main camera
-		for collision: StaticBody3D in main_level.current_table.placement_cols:
-			collision.process_mode = Node.PROCESS_MODE_DISABLED
+	elif cameraRef == "top":
+		main_level.current_table.cameras[0].make_current()
 
-		state = States.SPECTATING
+
+# TODO get next capsule to spawn from next player to play capsules array
+# Instantiate a nes capsule object on the Marker3D spawn point of the current table
+func spawn_capsule() -> void:
+	var nes_capsule_i: NesCapsule = NES_CAPSULE.instantiate()
+	main_level.add_child(nes_capsule_i)
+	nes_capsule_i.global_transform.origin = main_level.current_table.spawn_point.global_transform.origin
+	nes_capsule_i.possess()
+
+
+func next_turn() -> void:
+	# TODO If multiplayer, check current player before switching cams
+	switch_camera("main")
+	state = States.SPECTATING
+	turn += 1
+	# TODO set next player
 
 
 # TODO
