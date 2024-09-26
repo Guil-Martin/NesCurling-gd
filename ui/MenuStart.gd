@@ -32,7 +32,7 @@ func _ready() -> void:
 
 	slider_nbcapsules.set_value_no_signal(GameState.nbCapsules)
 	label_nbcapsules_txt.text = str(GameState.nbCapsules)
-		
+
 
 func _on_slider_nbcapsules_value_changed(value: float) -> void:
 	label_nbcapsules_txt.text = str(value)
@@ -66,6 +66,11 @@ func set_level(level: Resource) -> void:
 func _on_selected_table_pressed() -> void:
 	ui_table_select_menu.visible = true
 
+
 # From GameState.set_table_s signal
 func set_table(table: Resource) -> void:
 	selected_table.texture_normal = table.image
+
+
+func _on_selected_capsule_pressed() -> void:
+	ui_capsule_select_menu.visible = true

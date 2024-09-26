@@ -2,11 +2,14 @@ class_name UIStartGamePlayers extends VBoxContainer
 
 const PLAYER_BOX = preload("res://ui/components/start_game_player/PlayerBox.tscn")
 var select_avatar_slot: int
+var select_capsule_slot: int
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Connect set avatar signal from GameState to change the avatar of the given player box's avatar button 
+	# Connect set avatar & capsule signal from GameState to change the avatar/capsule of the given player box's avatar/capsule button 
 	GameState.set_avatar_s.connect(set_avatar)
+	GameState.set_capsule_s.connect(set_capsule)
 	
 	# Add at least one player each time
 	add_player_box()
@@ -44,7 +47,22 @@ func open_select_avatar(slot: int) -> void:
 	GameState.menu_start.ui_avatar_select_menu.visible = true
 
 
-# Triggered from SelectElement 
+# Callable from the signal of each avatar button of player boxes
+func open_select_capsule(slot: int) -> void:
+	select_capsule_slot = slot
+	GameState.menu_start.ui_capsule_select_menu.visible = true
+
+
+# Connected in the ready function, Triggered from SelectElement that execute set_avatar function on GameState that trigger the connected signal
 func set_avatar(avatar: Resource) -> void:
 	var pBox: PlayerBox = get_children()[select_avatar_slot]
-	pBox.get_node("avatarBtn").texture_normal = avatar.image
+	pBox.get_node("button_avatar").texture_normal = avatar.image
+
+
+# Connected in the ready function, Triggered from SelectElement that execute set_capsule function on GameState that trigger the connected signal
+func set_capsule(capsule: Resource) -> void:
+	var pBox: PlayerBox = get_children()[select_capsule_slot]
+	pBox.get_node("button_capsule").texture_normal = capsule.image
+	GameState.capsule_skins[select_capsule_slot] = capsule.albedo
+	# TODO change skin of players's capsules, set a variable in the corresponding player's script ? 
+	# so when a capsule is spwaned it takes this texture and puts it on the capsule material

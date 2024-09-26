@@ -11,3 +11,8 @@ https://github.com/godot-jolt/godot-jolt/releases
 
 1. downlaod from github and add 'godot-jolt' folder in the project's addons/ folder
 2. Use the AssetLib in Godot and download Godot Jolt
+
+## Export Web
+
+https://github.com/godot-jolt/godot-jolt/pull/902
+Option A, files to be added to addons/godot-jolt

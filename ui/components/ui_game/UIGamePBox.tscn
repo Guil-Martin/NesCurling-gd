@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://boypkfrwjbb6h"]
 
 [ext_resource type="Script" path="res://ui/components/ui_game/UIGamePBox.gd" id="1_7fnq1"]
-[ext_resource type="Texture2D" uid="uid://pausm3irrlfp" path="res://ui/images/cap_white.png" id="1_8adjk"]
+[ext_resource type="Texture2D" uid="uid://pausm3irrlfp" path="res://ui/components/selector/capsules/cap_white.png" id="1_8adjk"]
 
 [node name="UIGamePBox" type="VBoxContainer"]
 offset_right = 237.0

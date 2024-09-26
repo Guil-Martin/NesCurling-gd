@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://crc8cnukweya5"]
+[gd_scene load_steps=21 format=3 uid="uid://crc8cnukweya5"]
 
 [ext_resource type="Theme" uid="uid://8vbrmwwup85v" path="res://ui/nes_theme.tres" id="1_4o62l"]
 [ext_resource type="Script" path="res://ui/MenuStart.gd" id="1_p8o61"]
@@ -16,10 +16,15 @@
 [ext_resource type="Resource" uid="uid://d4lbdxisqtc37" path="res://ui/components/selector/levels/select_office_level.tres" id="13_sjids"]
 [ext_resource type="Texture2D" uid="uid://cpgrbmbod08c0" path="res://ui/components/selector/levels/preview_office.png" id="16_gu6h4"]
 [ext_resource type="Texture2D" uid="uid://birom0fqu6tl2" path="res://ui/components/selector/tables/preview_base_table.png" id="17_dycf3"]
+[ext_resource type="Resource" uid="uid://dn6ap5wilup3p" path="res://ui/components/selector/capsules/select_colored.tres" id="17_tiuqp"]
+[ext_resource type="Resource" uid="uid://c1yvqdymql01y" path="res://ui/components/selector/capsules/select_lau.tres" id="18_b6d5b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ta6n4"]
 shader = ExtResource("2_ol466")
 shader_parameter/speed = 0.15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20wt6"]
+bg_color = Color(0, 0.266035, 0.248847, 1)
 
 [node name="MenuStart" type="Control"]
 layout_mode = 3
@@ -62,14 +67,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -202.0
-offset_top = -305.0
-offset_right = 128.0
-offset_bottom = 195.0
+offset_left = -263.0
+offset_top = -356.0
+offset_right = 175.0
+offset_bottom = 225.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.2, 1.2)
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_20wt6")
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
@@ -231,7 +237,7 @@ visible = false
 layout_mode = 2
 anchors_preset = 0
 offset_bottom = 6.10352e-05
-elements = Array[Resource]([ExtResource("13_sjids")])
+elements = Array[Resource]([ExtResource("17_tiuqp"), ExtResource("18_b6d5b")])
 
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/button_add_player" to="." method="_on_button_add_player_pressed"]
 [connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/nb_cap_box/slider_nbcapsules" to="." method="_on_slider_nbcapsules_value_changed"]

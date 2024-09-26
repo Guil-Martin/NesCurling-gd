@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8tvt7wc8hudg"]
+[gd_scene load_steps=6 format=3 uid="uid://c8tvt7wc8hudg"]
 
 [ext_resource type="Script" path="res://ui/components/start_game_player/PlayerBox.gd" id="1_ey4ed"]
-[ext_resource type="Texture2D" uid="uid://pausm3irrlfp" path="res://ui/images/cap_white.png" id="2_uxxtb"]
+[ext_resource type="Texture2D" uid="uid://pausm3irrlfp" path="res://ui/components/selector/capsules/cap_white.png" id="2_uxxtb"]
+[ext_resource type="Texture2D" uid="uid://nx1lrkbdjsyl" path="res://ui/components/selector/avatars/blank.png" id="2_vacvx"]
 [ext_resource type="Texture2D" uid="uid://bl87rgcdoylxx" path="res://ui/images/ui_close.png" id="3_yjgh3"]
 
 [sub_resource type="Theme" id="Theme_6ep3s"]
@@ -9,11 +10,21 @@ LineEdit/styles/normal = null
 
 [node name="PlayerBox" type="HBoxContainer"]
 custom_minimum_size = Vector2(250, 30)
+offset_right = 333.0
+offset_bottom = 48.0
 script = ExtResource("1_ey4ed")
 
-[node name="avatarBtn" type="TextureButton" parent="."]
+[node name="button_avatar" type="TextureButton" parent="."]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(35, 0)
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+texture_normal = ExtResource("2_vacvx")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="button_capsule" type="TextureButton" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 texture_normal = ExtResource("2_uxxtb")
 ignore_texture_size = true
@@ -30,11 +41,15 @@ clear_button_enabled = true
 
 [node name="delete" type="TextureButton" parent="."]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(30, 0)
+visible = false
+custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("3_yjgh3")
 ignore_texture_size = true
 stretch_mode = 0
 
-[connection signal="pressed" from="avatarBtn" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="button_avatar" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="button_capsule" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="delete" to="." method="_on_delete_pressed"]

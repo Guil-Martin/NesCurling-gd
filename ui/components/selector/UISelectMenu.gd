@@ -11,9 +11,9 @@ func _ready() -> void:
 		add_element(element)
 
 
-# Call function by name by getting the value of the event dictionary using the element.type enum value in the given resource
+# Call function event_selector on GameState and emit signal based on resource type
 func element_pressed(element: Resource) -> void:
-	GameState.call(element.event[element.type], element)
+	GameState.event_selector(element)
 	visible = false
 
 

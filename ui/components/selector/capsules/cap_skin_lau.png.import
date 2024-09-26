@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pausm3irrlfp"
-path="res://.godot/imported/cap_white.png-7218e59f31b54b1d6b5db94556e786fb.ctex"
+uid="uid://cavnksgjpos20"
+path="res://.godot/imported/cap_skin_lau.png-89bcc2b0d5310f3bc5a63d8b95f50c2b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/images/cap_white.png"
-dest_files=["res://.godot/imported/cap_white.png-7218e59f31b54b1d6b5db94556e786fb.ctex"]
+source_file="res://ui/components/selector/capsules/cap_skin_lau.png"
+dest_files=["res://.godot/imported/cap_skin_lau.png-89bcc2b0d5310f3bc5a63d8b95f50c2b.ctex"]
 
 [params]
 

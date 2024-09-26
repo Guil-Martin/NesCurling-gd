@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://c1yvqdymql01y"]
+
+[ext_resource type="Texture2D" uid="uid://cavnksgjpos20" path="res://ui/components/selector/capsules/cap_skin_lau.png" id="1_fg2iq"]
+[ext_resource type="Script" path="res://ui/components/selector/SelectElement.gd" id="2_gni1v"]
+
+[resource]
+script = ExtResource("2_gni1v")
+name = "L'au manoir du café"
+image = ExtResource("1_fg2iq")
+type = 3
+albedo = ExtResource("1_fg2iq")

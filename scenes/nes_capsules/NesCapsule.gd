@@ -54,9 +54,15 @@ func _ready() -> void:
 	
 	# TODO check current player remaining capsule then take its informations to change the skin of the spawned capsule
 	# Set color for this capsule, copy material so it's different from the base one (or it'll change the material color for all capsule instances)
-	var material = nes_capsule.get_active_material(0).duplicate()
-	color = Color(randf(), randf(), randf())
-	material.albedo_color = color
+	var material: Material = nes_capsule.get_active_material(0).duplicate()
+	
+	# If null, set random color
+	if GameState.current_player.capsule_skin:
+		material.albedo_texture = GameState.current_player.capsule_skin
+	else:
+		color = Color(randf(), randf(), randf())
+		material.albedo_color = color
+		
 	nes_capsule.set_surface_override_material(0, material)
 
 

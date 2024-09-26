@@ -22,8 +22,8 @@ func _ready() -> void:
 		players_box.add_child(pbox)
 		pbox.setup_player_box(player)
 		
-	set_turn(GameState.turn)
-	set_round(GameState.round)
+	set_turn(GameState.current_turn)
+	set_round(GameState.current_round)
 
 
 func _process(delta: float) -> void:
