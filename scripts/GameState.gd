@@ -48,7 +48,7 @@ func event_selector(element: Resource) -> void:
 
 # Players
 var players: Array[Player]
-var playingPlayer: Player
+var player_colors: Array[Color] = [Color.DODGER_BLUE, Color.FIREBRICK, Color.GOLDENROD, Color.SEA_GREEN]
 var capsule_skins: Dictionary = { 0: null, 1: null, 2: null, 3: null } # Holds UI selected capsule skins until the player objects are created 
 
 # Local data
@@ -85,8 +85,8 @@ var endRoundMsg: String
 func setEndRoundMsg(message):
 	endRoundMsg = message
 	
-var scoreToWin: float = 10
-var nbCapsules: float = 3
+var score_to_win: float = 10
+var nb_capsules: float = 3
 
 # Shooting
 var power_bar: ProgressBar
@@ -98,36 +98,104 @@ func check_if_rules_ready() -> bool:
 	return players.size() > 0
 
 
-# Set rules, level, table, players, capsules etc
-func start_game() -> void:
+# Called from button event in MenuStart, Set rules, level, table, players, capsules etc
+func setup_game() -> void:
 	var slider_score: HSlider = menu_start.get_node("%slider_score")
 	var slider_nbcapsules: HSlider = menu_start.get_node("%slider_nbcapsules")
-	nbCapsules = slider_nbcapsules.value
-	scoreToWin = slider_score.value
+	nb_capsules = slider_nbcapsules.value
+	score_to_win = slider_score.value
 	
 	var players_boxes: Array = menu_start.get_node("%ui_players").get_children()
 	
 	# Get players box then append an object value in the players array if a name has been entered in the input
-
 	for index in players_boxes.size():
 		var player_box: PlayerBox = players_boxes[index]
 		if player_box.input_name.text.length() > 0:
 			var newPlayer: Player = Player.new()
 			newPlayer.name = player_box.input_name.text
-			newPlayer.slot = players.size() if players.size() == 0 else players.size() + 1
-			newPlayer.remaining_capsules = nbCapsules # TODO add nb of capsule in UI
+			newPlayer.slot = players.size() 
+			newPlayer.remaining_capsules = nb_capsules # TODO add nb of capsule in UI
 			newPlayer.avatar = player_box.button_avatar.texture_normal
 			newPlayer.capsule_skin = capsule_skins[index] # Adds capsule skin from index of the player box and set in the dictionary from UIStartGamePlayers
 			players.append(newPlayer)
 	
-	current_player = players[0]
-	
 	state = States.SPECTATING;
-	current_turn = 1
-	current_round = 1
 		
 	if check_if_rules_ready():
 		get_tree().call_deferred("change_scene_to_file", LEVELS_PATH + "MainLevel.tscn")
+
+
+func start_game() -> void:
+	current_round = 1
+	current_turn = 1
+	current_player = players[0]
+	game_ui.display_message()
+	game_ui.update_UI()
+	spawn_capsule()
+
+
+# Loop through players to check if one of them has the necessary score to win and return its reference if so
+func is_there_winner() -> Player:
+	for player: Player in players:
+		if player.score >= score_to_win:
+			return player
+	return null
+
+
+# Deternine which player is the winner of this round and add its points, return null if there in no capsule in the zone
+func point_counting() -> NesCapsule:
+	var nearest_capsule: NesCapsule
+	if within_score_zone.size() > 0:
+		nearest_capsule = within_score_zone[0]
+		for capsule: NesCapsule in within_score_zone:
+			if capsule.global_position.z > nearest_capsule.global_position.z:
+				nearest_capsule = capsule
+				
+		# TODO cumulate points if multiple winning capsule of the same player
+		if nearest_capsule:
+			players[nearest_capsule.player_owner.slot].score += 1
+		
+	return nearest_capsule
+
+
+func next_turn() -> void:
+	switch_camera("main")
+	state = States.SPECTATING
+
+	current_player = determine_next_player()
+	
+	# TODO Check score for victory
+	if current_player == null:
+		
+		# Count point and set winning_capsule, can be null if no capsules in the zone
+		var winning_capsule: NesCapsule = point_counting()
+		
+		var winner: Player = is_there_winner()
+		if winner:
+			print("Player ", winner.name, " is the winner!")
+			return
+		else:
+			# Start of a new round, clean up capsules, reset capsules for all players
+			current_round += 1
+			clean_capsules()
+			for player: Player in players:
+				player.remaining_capsules = nb_capsules
+			# Last to win points start the round, else the first player 
+			# TODO if no point marked, choose the one with best score
+			current_player = players[winning_capsule.player_owner.slot] if winning_capsule != null else players[0]
+			
+	current_turn += 1
+	game_ui.display_message()
+	game_ui.update_UI()
+	spawn_capsule() # Spawn capsule of the new player
+
+
+# Instantiate a nes capsule object on the Marker3D spawn point of the current table
+func spawn_capsule() -> void:
+	var nes_capsule_i: NesCapsule = NES_CAPSULE.instantiate()
+	main_level.add_child(nes_capsule_i)
+	nes_capsule_i.global_transform.origin = main_level.current_table.spawn_point.global_transform.origin
+	nes_capsule_i.possess()
 
 
 # Enable or disable the collisions on the table placement zone
@@ -144,93 +212,53 @@ func switch_camera(cameraRef: String) -> void:
 		main_level.current_table.cameras[0].make_current()
 
 
-# TODO get next capsule to spawn from next player to play capsules array
-# Instantiate a nes capsule object on the Marker3D spawn point of the current table
-func spawn_capsule() -> void:
-	var nes_capsule_i: NesCapsule = NES_CAPSULE.instantiate()
-	main_level.add_child(nes_capsule_i)
-	nes_capsule_i.global_transform.origin = main_level.current_table.spawn_point.global_transform.origin
-	nes_capsule_i.possess()
+# Does this player own a capsule in the score zone ?
+func has_capsule_inzone(player_slot) -> bool:
+	for capsule: NesCapsule in within_score_zone:
+		if capsule.player_owner.slot == player_slot:
+			return true
+	return false
 
 
-func determine_next_player() -> void:
-	pass
-
-  #determineNextPlayer: (inZoneCapsules) => {
-	#const currentPlayerSlot = get().playingPlayer.slot - 1; // Adjust slot to zero-based index
-	#const players = get().players;
-#
-	#// Initialize the next player, current player if capsule remaining, otherwise next player in line
-	#let nextPlayer =
-	  #players[currentPlayerSlot].remaining > 0
-		#? players[currentPlayerSlot]
-		#: currentPlayerSlot === players.length - 1
-		  #? players[0]
-		  #: players[currentPlayerSlot + 1];
-#
-	#// console.log("============== nextPlayer", nextPlayer);
-#
-	#// Iterate through all players starting from the current player
-	#for (let i = 1; i <= players.length; i++) {
-	  #const playerIndex = (currentPlayerSlot + i) % players.length;
-	  #const player = players[playerIndex];
-#
-	  #// console.log("Iterate next player -> ", player);
-#
-	  #// Check if the player has any capsules left to play
-	  #const capsuleRemaining = player.remaining > 0;
-	  #if (!capsuleRemaining) continue;
-#
-	  #// Prioritize players who haven't played any capsules in this round
-	  #if (player.remaining === get().nbCapsules) {
-		#nextPlayer = player;
-		#break;
-	  #}
-#
-	  #// nextPlayer has no capsule, no point of comparing
-	  #if (!(nextPlayer.remaining > 0)) {
-		#nextPlayer = player;
-		#continue;
-	  #}
-#
-	  #// Check if the player has a capsule in the score zone
-	  #const bestCapsule = inZoneCapsules.find(
-		#(capsule) => capsule.userData.owner.slot === player.slot
-	  #);
-#
-	  #// If the player has a capsule in the score zone and it's closer to the edge than the nextPlayer's capsule
-	  #if (bestCapsule) {
-		#const nextPlayerBestCapsule = inZoneCapsules.find(
-		  #(capsule) => capsule.userData.owner.slot === nextPlayer.slot
-		#);
-#
-		#const bestCapsuleDistance = bestCapsule.translation().z;
-		#let nextPlayerBestCapsuleDistance = -Infinity;
-		#if (nextPlayerBestCapsule) {
-		  #nextPlayerBestCapsuleDistance = nextPlayerBestCapsule.translation().z;
-		#}
-#
-		#if (bestCapsuleDistance < nextPlayerBestCapsuleDistance) {
-		  #nextPlayer = player;
-		#}
-	  #} else {
-		#// If there are no capsules in the score zone, choose the next player with capsules left to play
-		#nextPlayer = player;
-		#break;
-	  #}
-	#}
-#
-	#return nextPlayer; //get().players.findIndex((player) => player.slot === nextPlayer.slot);
-  #},
+# Check if this player has the farthest capsule in the score zone, there must be at least 1 capsule in zone
+func is_farthest(player_slot) -> bool:
+	var farthest_cap: NesCapsule = within_score_zone[0]
+	for capsule: NesCapsule in within_score_zone:
+		farthest_cap = farthest_cap if farthest_cap.global_position.z < capsule.global_position.z else capsule
+	return farthest_cap.player_owner.slot == player_slot
 
 
-func next_turn() -> void:
-	# TODO If multiplayer, check current player before switching cams
-	switch_camera("main")
-	state = States.SPECTATING
-	current_turn += 1
-	# TODO Refresh UI
-	# TODO set next player
+# Look for a valid player to be the next player to play, if the player has capsules left, is outside the score zone or the farthest from the edge
+func get_next_player(ordered_players: Array[Player]) -> Player:
+	var next: Player
+	for i in range(1, ordered_players.size()):
+		var player: Player = ordered_players[i]
+		if player.remaining_capsules > 0: # Ignore if no capsule left
+			var in_zone = has_capsule_inzone(player.slot)
+			if !in_zone || in_zone && is_farthest(player.slot): # If outside of the zone or if capsule in zone the farthest
+				# TODO tofix : bleu in, red in, yellow out -> does not pick yellow again afterwards
+				return player
+	return next
+
+
+# Remove all references of NesCapsule objects in the scene
+func clean_capsules() -> void:
+	for child in main_level.get_children():
+		if child is NesCapsule:
+			child.queue_free()
+
+
+func determine_next_player() -> Player:
+	#var current_index = players.find(current_player)
+	var current_player_slot = current_player.slot;
+	var ordered_players = players.slice(current_player_slot) + players.slice(0, current_player_slot) # Slice the array to reorder with the current player at index 0
+	var next_player: Player = get_next_player(ordered_players)
+	
+	# If no valid players found, return the same player if they still have capsules to play
+	if next_player == null && current_player.remaining_capsules > 0:
+		return current_player
+	
+	return next_player
 
 
 # TODO

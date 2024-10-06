@@ -27,11 +27,11 @@ func _ready() -> void:
 	button_quit.grab_focus()
 	button_quit.visible = !GameState.platformWeb
 	
-	slider_score.set_value_no_signal(GameState.scoreToWin)
-	label_score_txt.text = str(GameState.scoreToWin)
+	slider_score.set_value_no_signal(GameState.score_to_win)
+	label_score_txt.text = str(GameState.score_to_win)
 
-	slider_nbcapsules.set_value_no_signal(GameState.nbCapsules)
-	label_nbcapsules_txt.text = str(GameState.nbCapsules)
+	slider_nbcapsules.set_value_no_signal(GameState.nb_capsules)
+	label_nbcapsules_txt.text = str(GameState.nb_capsules)
 
 
 func _on_slider_nbcapsules_value_changed(value: float) -> void:
@@ -47,7 +47,7 @@ func _on_button_add_player_pressed() -> void:
 
 
 func _on_button_start_pressed() -> void:
-	GameState.start_game()
+	GameState.setup_game()
 	
 
 func _on_button_quit_pressed() -> void:

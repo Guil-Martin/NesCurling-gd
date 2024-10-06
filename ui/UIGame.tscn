@@ -126,6 +126,7 @@ size_flags_vertical = 1
 text = "Turn: 000"
 
 [node name="action_btns" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -199,6 +200,45 @@ grow_horizontal = 2
 text = "STATE"
 horizontal_alignment = 1
 
+[node name="panel_msg" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -276.5
+offset_top = 146.0
+offset_right = 276.5
+offset_bottom = 315.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="panel_msg"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="next_turn_message" type="RichTextLabel" parent="panel_msg/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/mono_font_size = 24
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[center]Tour [color=gold]001[/color] du round [color=gold]001[/color]
+Au joueur 1 : [color=blue][b]---MisterLongName---[/b][/color] de jouer ![/center]"
+fit_content = true
+
+[node name="timer_msg_display" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="pressed" from="action_btns/SpawnCapsule" to="." method="_on_spawn_capsule_pressed"]
 [connection signal="pressed" from="action_btns/DeleteAll" to="." method="_on_delete_all_pressed"]
 [connection signal="pressed" from="action_btns/Possess" to="." method="_on_possess_pressed"]
+[connection signal="timeout" from="timer_msg_display" to="." method="_on_timer_msg_display_timeout"]

@@ -9,6 +9,10 @@ class_name UIGame extends Control
 @onready var players_box: VBoxContainer = %ui_players_box
 @onready var power_bar: ProgressBar = %power_bar
 
+@onready var panel_msg: PanelContainer = %panel_msg
+@onready var next_turn_message: RichTextLabel = %next_turn_message
+@onready var timer_msg_display: Timer = $timer_msg_display
+
 const CAP_ICON = preload("res://ui/components/ui_game/CapIcon.tscn")
 const NES_CAPSULE = preload("res://scenes/nes_capsules/base/nes_capsule.tscn")
 const UI_GAME_P_BOX = preload("res://ui/components/ui_game/UIGamePBox.tscn")
@@ -24,6 +28,24 @@ func _ready() -> void:
 		
 	set_turn(GameState.current_turn)
 	set_round(GameState.current_round)
+
+
+func update_UI() -> void:
+	set_turn(GameState.current_turn)
+	set_round(GameState.current_round)
+	# TODO Set outline on the current player container
+
+
+# Display the name of the next player
+func display_message() -> void:
+	next_turn_message.text = "[center]Tour [color=gold]%s[/color] du round [color=gold]%s[/color]\nPlayer %s : [color=%s][b]%s[/b][/color] playing![/center]" % [GameState.current_turn, GameState.current_round, GameState.current_player.slot + 1, GameState.player_colors[GameState.current_player.slot].to_html(), GameState.current_player.name]
+	panel_msg.visible = true
+	timer_msg_display.start()
+
+
+# Triggered after 3 seconds when display_message() is called
+func _on_timer_msg_display_timeout() -> void:
+	panel_msg.visible = false
 
 
 func _process(delta: float) -> void:

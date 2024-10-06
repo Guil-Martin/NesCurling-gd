@@ -1,6 +1,6 @@
 class_name NesCapsule extends RigidBody3D
 
-var player_owner: Player = GameState.players[0]
+var player_owner: Player
 var color: Color = Color.GRAY
 
 @onready var nes_capsule: MeshInstance3D = $nesCapsule
@@ -49,19 +49,18 @@ var power_speed: float = 1.5  # Speed at which the bar fills/empties
 
 func _ready() -> void:
 	# TODO player owner
-	#player_owner = the current palyer
+	player_owner = GameState.current_player
 	GameState.last_capsule = self
 	
-	# TODO check current player remaining capsule then take its informations to change the skin of the spawned capsule
 	# Set color for this capsule, copy material so it's different from the base one (or it'll change the material color for all capsule instances)
 	var material: Material = nes_capsule.get_active_material(0).duplicate()
 	
-	# If null, set random color
+	# Set the texture of the capsule from .capsule_skin value, else add the corresponding player's color slot
 	if GameState.current_player.capsule_skin:
 		material.albedo_texture = GameState.current_player.capsule_skin
 	else:
 		color = Color(randf(), randf(), randf())
-		material.albedo_color = color
+		material.albedo_color = GameState.player_colors[GameState.current_player.slot]
 		
 	nes_capsule.set_surface_override_material(0, material)
 
@@ -115,7 +114,11 @@ func _input(event: InputEvent) -> void:
 
 func on_power_released() -> void:
 	GameState.state = GameState.States.SHOOTING
+	GameState.current_player.remaining_capsules -= 1
+	
+	
 	GameState.toggle_table_placement_collisions(false)
+	# TODO switch random camera effect
 	GameState.switch_camera("top")
 	lock_rotation = false
 	
@@ -152,7 +155,7 @@ func _on_shoot_timer_timeout() -> void:
 	# TODO check is there is a capsule in the placement zone then move it is so
 	possessed = false
 	GameState.next_turn()
-	GameState.spawn_capsule() # TODO test, to remove
+	#GameState.spawn_capsule() # TODO test, to remove
 
 
 # In _process, each frame we fill and deplete the power bar using the value shader parameter until the click is released

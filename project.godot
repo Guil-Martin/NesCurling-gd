@@ -38,6 +38,7 @@ enabled=PackedStringArray()
 
 folder_colors={
 "res://audio/": "yellow",
+"res://data/": "pink",
 "res://images/": "yellow",
 "res://resources/": "purple",
 "res://scenes/": "orange",

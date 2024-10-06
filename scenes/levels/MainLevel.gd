@@ -8,7 +8,6 @@ var score_zone: Area3D
 	
 var current_level: BaseLevel
 var current_table: NesTable
-var current_capsule: NesCapsule
 
 func _ready() -> void:
 	# Self ref in GameState to be accessed from everywhere
@@ -35,6 +34,9 @@ func _ready() -> void:
 	current_table.rotation = marker_table.rotation
 	
 	setup_camera()
+	
+	# Start the game after the level is loaded
+	GameState.start_game()
 
 
 # Move camera to the level's camera marker then 180 on z axis
