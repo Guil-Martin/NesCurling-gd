@@ -5,6 +5,7 @@ var player: Player
 @onready var player_name: Label = %player_name
 @onready var player_color: TextureRect = %player_color
 @onready var player_score: Label = %player_score
+@onready var remaining_capsules: Label = %remaining_capsules
 
 func setup_player_box(player: Player) -> void:
 	self.player = player

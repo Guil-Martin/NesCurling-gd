@@ -229,16 +229,35 @@ func is_farthest(player_slot) -> bool:
 
 
 # Look for a valid player to be the next player to play, if the player has capsules left, is outside the score zone or the farthest from the edge
-func get_next_player(ordered_players: Array[Player]) -> Player:
-	var next: Player
+func determine_next_player() -> Player:
+	# Slice the array to reorder with the current player at index 0
+	var ordered_players: Array[Player] = players.slice(current_player.slot) + players.slice(0, current_player.slot)
+	
 	for i in range(1, ordered_players.size()):
 		var player: Player = ordered_players[i]
 		if player.remaining_capsules > 0: # Ignore if no capsule left
 			var in_zone = has_capsule_inzone(player.slot)
-			if !in_zone || in_zone && is_farthest(player.slot): # If outside of the zone or if capsule in zone the farthest
-				# TODO tofix : bleu in, red in, yellow out -> does not pick yellow again afterwards
+			if !in_zone: # return the first player outside of the zone
 				return player
-	return next
+
+	# If no player after the current player has a capsule outside, return the current player if they don't have a capsule inside the score zone and remaining capsules
+	if ordered_players[0].remaining_capsules > 0 && !has_capsule_inzone(ordered_players[0].slot):
+		return ordered_players[0]
+
+	# If sill no player found, return the player that has the farthest capsule from the edge
+	for i in range(1, ordered_players.size()):
+		var player: Player = ordered_players[i]
+		if player.remaining_capsules > 0: # Ignore if no capsule left
+			var in_zone = has_capsule_inzone(player.slot)
+			if in_zone && is_farthest(player.slot): 
+				return player
+				
+	# A player still has not been found, return next player that have capsule remaining
+	for player in players:
+		if player.remaining_capsules > 0: 
+			return player
+	
+	return null
 
 
 # Remove all references of NesCapsule objects in the scene
@@ -248,20 +267,10 @@ func clean_capsules() -> void:
 			child.queue_free()
 
 
-func determine_next_player() -> Player:
-	#var current_index = players.find(current_player)
-	var current_player_slot = current_player.slot;
-	var ordered_players = players.slice(current_player_slot) + players.slice(0, current_player_slot) # Slice the array to reorder with the current player at index 0
-	var next_player: Player = get_next_player(ordered_players)
-	
-	# If no valid players found, return the same player if they still have capsules to play
-	if next_player == null && current_player.remaining_capsules > 0:
-		return current_player
-	
-	return next_player
-
-
 # TODO
 func resetGame() -> void:
 	current_turn = 0
 	current_round = 0
+	for player: Player in players:
+		player.score = 0
+		player.remaining_capsules = nb_capsules

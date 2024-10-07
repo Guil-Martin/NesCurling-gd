@@ -21,24 +21,39 @@ func _ready() -> void:
 	GameState.game_ui = self
 	GameState.power_bar = power_bar
 	
-	for player in GameState.players:
+	for player: Player in GameState.players:
 		var pbox: UIGamePBox = UI_GAME_P_BOX.instantiate()
 		players_box.add_child(pbox)
 		pbox.setup_player_box(player)
 		
-	set_turn(GameState.current_turn)
-	set_round(GameState.current_round)
+	update_UI()
+
+
+func set_score_players(players: Array[Player]) -> void:
+	var player_boxes = players_box.get_children()
+	for i in range(player_boxes.size()):
+		var player_box: UIGamePBox = player_boxes[i]
+		player_box.player_score.text = "Score: " + str(players[i].score)
+
+
+func set_remaining_capsules(players: Array[Player]) -> void:
+	var player_boxes = players_box.get_children()
+	for i in range(player_boxes.size()):
+		var player_box: UIGamePBox = player_boxes[i]
+		player_box.remaining_capsules.text = "Capsules: " + str(players[i].remaining_capsules)
 
 
 func update_UI() -> void:
 	set_turn(GameState.current_turn)
 	set_round(GameState.current_round)
+	set_score_players(GameState.players)
+	set_remaining_capsules(GameState.players)
 	# TODO Set outline on the current player container
 
 
 # Display the name of the next player
 func display_message() -> void:
-	next_turn_message.text = "[center]Tour [color=gold]%s[/color] du round [color=gold]%s[/color]\nPlayer %s : [color=%s][b]%s[/b][/color] playing![/center]" % [GameState.current_turn, GameState.current_round, GameState.current_player.slot + 1, GameState.player_colors[GameState.current_player.slot].to_html(), GameState.current_player.name]
+	next_turn_message.text = "[center]Tour [color=gold]%s[/color], round [color=gold]%s[/color]\nj%s : Au tour de [color=%s][b]%s[/b][/color] ![/center]" % [GameState.current_turn, GameState.current_round, GameState.current_player.slot + 1, GameState.player_colors[GameState.current_player.slot].to_html(), GameState.current_player.name]
 	panel_msg.visible = true
 	timer_msg_display.start()
 
